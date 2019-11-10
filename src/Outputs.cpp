@@ -26,16 +26,27 @@
 //
 //  On the board (and in the build guide) the outputs are 1 through 6. In software they are 0 through 5.
 
+#if TEENSY31
+volatile uint8_t *portAOut, *portAMode, *portBOut, *portBMode;
+#else
 volatile uint32_t *portAOut, *portAMode, *portBOut, *portBMode;
+#endif
 static boolean outputState[NUMBER_OF_OUTPUTS];
 
 // Initialize the registers controlling the outputs, and turn them off
 void initOutputs() {
   // Get pointer to the registers
+#if TEENSY31
+  portAOut   = portOutputRegister(5);
+  portAMode  = portModeRegister(5);
+  portBOut   = portOutputRegister(A2);
+  portBMode  = portModeRegister(A2); 
+#else
   portAOut   = portOutputRegister(digitalPinToPort(5));
   portAMode  = portModeRegister(digitalPinToPort(5));
   portBOut   = portOutputRegister(digitalPinToPort(A2));
   portBMode  = portModeRegister(digitalPinToPort(A2)); 
+#endif
 
   // Set all I/O modes to outputs
   *portAMode |= SETBIT15;

@@ -3,7 +3,11 @@
 
 #include <Arduino.h>
 
+#if TEENSY31
+extern volatile uint8_t *portAOut, *portAMode, *portBOut, *portBMode;
+#else
 extern volatile uint32_t *portAOut, *portAMode, *portBOut, *portBMode;
+#endif
 
 void initOutputs();
 void setOutput(uint8_t outputNumber, boolean state);

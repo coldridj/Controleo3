@@ -51,6 +51,7 @@ void Controleo3LCD::begin()
 // Set the I/O mode on the read pin
 void Controleo3LCD::readMode(boolean enable)
 {
+#if !TEENSY31
     if (enable) {
         // Set data pins to input mode
         for (int i=0; i<8; i++) {
@@ -65,6 +66,7 @@ void Controleo3LCD::readMode(boolean enable)
             PORT->Group[PORTB].DIRSET.reg = (uint32_t)(1<<i);
         }
     }
+#endif
 }
 
 

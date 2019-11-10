@@ -8,6 +8,10 @@
 #include "Outputs.h"
 #include "Temperature.h"
 
+#if TEENSY31
+//#include <gclk.h>
+#endif
+
 // Timer TC3 is used for 2 things:
 // 1. Take thermocouple readings every 200ms (5 times per second)
 // 2. Control the servo used to open the oven door
@@ -61,6 +65,7 @@ volatile int16_t servoIncrement;           // The amount to increase/decrease th
 
 // Starts the timer.  Called on startup
 void initializeTimer() {
+#if !TEENSY31
   // Enable clock for TC 
   REG_GCLK_CLKCTRL = (uint16_t) (GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_ID_TCC2_TC3);
   while ( GCLK->STATUS.bit.SYNCBUSY == 1 ); // Wait for sync 
@@ -106,12 +111,14 @@ void initializeTimer() {
 
   // Assume the servo is in the closed position
   TC->CC[1].reg = degreesToTimerCounter(prefs.servoClosedDegrees) + 1;
+#endif
 }
 
 
 // Interrupt handler for TC3
 void TC3_Handler()
 {
+#if !TEENSY31
   volatile static int thermocoupleTimer = 0;
 
   TcCount16* TC = (TcCount16*) TC3; 
@@ -164,11 +171,13 @@ void TC3_Handler()
     // Clear the interrupt flag
     TC->INTFLAG.bit.MC1 = 1;    
   }
+#endif
 }
 
 
 // Move the servo to servoDegrees, in timeToTake milliseconds (1/1000 second)
 void setServoPosition(uint8_t servoDegrees, uint16_t timeToTake) {
+#if !TEENSY31
   TcCount16* TC = (TcCount16*) TC3;     // Get timer struct
   sprintf(buffer100Bytes, "Servo: move to %d degrees, over %d ms", servoDegrees, timeToTake);
   SerialUSB.println(buffer100Bytes);
@@ -207,6 +216,7 @@ reenable:
   // Enable TC and wait for sync
   TC->CTRLA.reg |= TC_CTRLA_ENABLE;
   while (TC->STATUS.bit.SYNCBUSY == 1); 
+#endif
 } 
 
 

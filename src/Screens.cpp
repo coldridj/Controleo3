@@ -3,6 +3,7 @@
 // Build a reflow oven: https://whizoo.com
 
 #include <Arduino.h>
+#include "Teensy.h"
 #include "Screens.h"
 #include "Render.h"
 #include "Touch.h"

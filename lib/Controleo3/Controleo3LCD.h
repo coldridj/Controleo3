@@ -79,41 +79,45 @@
 class Controleo3LCD
 {
 	public:
-  	Controleo3LCD(void);
+		Controleo3LCD(void);
 
-  	void begin();
-  	void reset(uint8_t type);
-  	void drawPixel(int16_t x, int16_t y, uint16_t color);
-  	void drawFastHLine(int16_t x0, int16_t y0, int16_t w, uint16_t color);
-  	void drawFastVLine(int16_t x0, int16_t y0, int16_t h, uint16_t color);
-  	void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c);
-  	void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c);
-  	void fillScreen(uint16_t color);
+		void begin();
+		void reset(uint8_t type);
+		void drawPixel(int16_t x, int16_t y, uint16_t color);
+		void drawFastHLine(int16_t x0, int16_t y0, int16_t w, uint16_t color);
+		void drawFastVLine(int16_t x0, int16_t y0, int16_t h, uint16_t color);
+		void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c);
+		void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c);
+		void fillScreen(uint16_t color);
 
-  	void startBitmap(int16_t x, int16_t y, int16_t w, int16_t h);
-  	void endBitmap();
-  	void drawBitmap(uint16_t *data, uint32_t len);
+		void startBitmap(int16_t x, int16_t y, int16_t w, int16_t h);
+		void endBitmap();
+		void drawBitmap(uint16_t *data, uint32_t len);
 
-    void startReadBitmap(int16_t x, int16_t y, int16_t w, int16_t h);
-    void readBitmapRGB565(uint16_t *data, uint32_t len);
-    void readBitmap24bit(uint8_t *data, uint32_t len);
-    void endReadBitmap();
+		void startReadBitmap(int16_t x, int16_t y, int16_t w, int16_t h);
+		void readBitmapRGB565(uint16_t *data, uint32_t len);
+		void readBitmap24bit(uint8_t *data, uint32_t len);
+		void endReadBitmap();
 
-  	void pokeRegister(uint8_t reg);
-  	void setRegister8(uint8_t a, uint8_t d);
-    uint32_t getLCDVersion();
-    uint16_t convertTo16Bit(uint32_t val);
+		void pokeRegister(uint8_t reg);
+		void setRegister8(uint8_t a, uint8_t d);
+		uint32_t getLCDVersion();
+		uint16_t convertTo16Bit(uint32_t val);
 
 
 	private:
 		void setAddrWindow(int x1, int y1, int x2, int y2);
 		void flood(uint16_t color, uint32_t len);
-    void readMode(boolean enable);
-    uint8_t read8Data();
+    	void readMode(boolean enable);
+    	uint8_t read8Data();
+#if TEENSY31
+		volatile uint8_t *portBOut, *portBMode, *portBIn;
+#else
 		volatile uint32_t *portBOut, *portBMode, *portBIn;
-    volatile uint8_t *flood8Reg;
-    volatile uint16_t *bitmapReg;
-    uint16_t bitmapRegValue;
+#endif
+    	volatile uint8_t *flood8Reg;
+    	volatile uint16_t *bitmapReg;
+    	uint16_t bitmapRegValue;
 		void checkRange(int val, int low, int high, char *msg);
 };
 

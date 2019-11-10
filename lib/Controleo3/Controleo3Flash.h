@@ -42,31 +42,35 @@ class Controleo3Flash {
     public:
     	Controleo3Flash(void);
 
-		  void begin();
-      bool verifyFlashIC();
-      void waitUntilNotBusy(uint16_t timeMillis);
-      void protectFlash(uint8_t flashArea, bool writeToFlash);
-      void eraseFlash();
-      void startRead(uint16_t pageNumber, uint16_t bytesToRead, uint8_t *dest);
-      void continueRead(uint16_t bytesToRead, uint8_t *dest);
-      void endRead();
-      void write(uint16_t pageNumber, uint16_t bytesToWrite, uint8_t *src);
-      void slowRead(uint16_t pageNumber, uint16_t bytesToRead, uint8_t *dest);
-      void slowWrite(uint16_t pageNumber, uint16_t bytesToWrite, uint8_t *src);
-      void dumpStatusRegisters();
-      uint32_t readUniqueID();
-      void factoryReset();
-      void erasePrefsBlock(uint8_t block);
-      void eraseProfileBlock(uint16_t block);
-      void allowWritingToPrefs(boolean allow);
-      uint16_t getBitmapPage(uint16_t bitmapNumber, uint16_t bitmapWidth, uint16_t bitmapHeight);
-      uint16_t getBitmapInfo(uint16_t bitmapNumber, uint16_t *bitmapWidth, uint16_t *bitmapHeight);
+		void begin();
+		bool verifyFlashIC();
+		void waitUntilNotBusy(uint16_t timeMillis);
+		void protectFlash(uint8_t flashArea, bool writeToFlash);
+		void eraseFlash();
+		void startRead(uint16_t pageNumber, uint16_t bytesToRead, uint8_t *dest);
+		void continueRead(uint16_t bytesToRead, uint8_t *dest);
+		void endRead();
+		void write(uint16_t pageNumber, uint16_t bytesToWrite, uint8_t *src);
+		void slowRead(uint16_t pageNumber, uint16_t bytesToRead, uint8_t *dest);
+		void slowWrite(uint16_t pageNumber, uint16_t bytesToWrite, uint8_t *src);
+		void dumpStatusRegisters();
+		uint32_t readUniqueID();
+		void factoryReset();
+		void erasePrefsBlock(uint8_t block);
+		void eraseProfileBlock(uint16_t block);
+		void allowWritingToPrefs(boolean allow);
+		uint16_t getBitmapPage(uint16_t bitmapNumber, uint16_t bitmapWidth, uint16_t bitmapHeight);
+		uint16_t getBitmapInfo(uint16_t bitmapNumber, uint16_t *bitmapWidth, uint16_t *bitmapHeight);
 
 private:
-  		volatile uint32_t *portAOut, *portAIn, *portAMode;
-      void setPinIOMode(uint8_t mode);
-      void write8(uint8_t data);
-      uint8_t read8();
+#if TEENSY31
+		volatile uint8_t *portAOut, *portAIn, *portAMode;
+#else
+		volatile uint32_t *portAOut, *portAIn, *portAMode;
+#endif
+		void setPinIOMode(uint8_t mode);
+		void write8(uint8_t data);
+		uint8_t read8();
 };
 
 #endif // CONTROLEO3FLASH_H_

@@ -51,10 +51,14 @@ class Controleo3Touch
         bool isPressed();
 
     private:
+#if TEENSY31
+  		volatile uint8_t *portAOut, *portAIn, *portAMode, *portBOut, *portBIn, *portBMode;
+#else
   		volatile uint32_t *portAOut, *portAIn, *portAMode, *portBOut, *portBIn, *portBMode;
+#endif
         int16_t topLeftX,topRightX,bottomLeftX,bottomRightX,topLeftY,bottomLeftY,topRightY,bottomRightY;
 		void write8(byte data);
-		word read12();
+		uint16_t read12();
         uint16_t calcDeviation(uint16_t *array, uint8_t num, int16_t *average);
 };
 
