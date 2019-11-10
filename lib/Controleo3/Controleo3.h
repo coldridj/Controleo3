@@ -15,16 +15,10 @@
 
 // Include all the code for the display, touch, thermocouple, flash and the SD card
 #include "Controleo3MAX31856.h"
-#include "Controleo3LCD.h"
-#include "Controleo3Touch.h"
+#include "Controleo3LCDILI9341.h"
+//#include "Controleo3Touch.h"
 #include "Controleo3Flash.h"
 #include "Controleo3SD.h"
-
-
-#define LCD_WIDTH  		480
-#define LCD_HEIGHT 		320
-#define LCD_MAX_X		479
-#define LCD_MAX_Y		319
 
 #define BUZZER_PIN              MISO
 #define SD_DETECT_PIN           A0

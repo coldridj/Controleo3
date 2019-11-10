@@ -1,3 +1,5 @@
+#ifdef TOUCH_ENABLE
+
 #ifndef ReflowWizard_Touch_H
 #define ReflowWizard_Touch_H
 
@@ -17,5 +19,10 @@ int8_t getTap(uint8_t mode);
 void touchCallback();
 void displayTemperatureInHeader();
 
+
+#endif
+#else 
+
+#include "NonTouch.h"
 
 #endif

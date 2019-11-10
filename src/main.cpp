@@ -12,10 +12,16 @@
 #include "Touch.h"
 #include "Screens.h"
 
+// #define SD_ENABLE // process the SD card
+// #define OUTPUT_ENABLE // process outputs
+
 void setup(void) {
+#ifdef OUTPUT_ENABLE
   // First priority - turn off the relays!
   initOutputs();
+#endif
 
+#ifdef SD_ENABLE
   // See if there is a SD card present
   pinMode(SD_DETECT_PIN, INPUT_PULLUP);
   if (digitalRead(SD_DETECT_PIN) == LOW) {
@@ -37,19 +43,22 @@ void setup(void) {
       factoryReset(false);
     }
   }
+#endif
 
   // Get the splash screen up as quickly as possible
   tft.begin();
   flash.begin();
 
   // Display the initial splash screen
-  tft.pokeRegister(ILI9488_DISPLAYOFF);
+  // tft.pokeRegister(ILI9488_DISPLAYOFF);
   tft.fillScreen(WHITE);
   renderBitmap(BITMAP_CONTROLEO3, 40, 10);
   renderBitmap(BITMAP_WHIZOO, 84, 200);
   displayString(49, 92, FONT_12PT_BLACK_ON_WHITE, (char *) "Smart Oven Controller");
-  displayString(420, 290, FONT_9PT_BLACK_ON_WHITE, (char *) CONTROLEO3_VERSION);
-  tft.pokeRegister(ILI9488_DISPLAYON);
+  displayString(210, 290, FONT_9PT_BLACK_ON_WHITE, (char *) CONTROLEO3_VERSION);
+  
+#ifdef NDEF
+  // tft.pokeRegister(ILI9488_DISPLAYON);
   playTones(TUNE_STARTUP);
   SerialUSB.begin(115200);
 
@@ -85,6 +94,8 @@ void setup(void) {
     showScreen(SCREEN_HOME);
   else  
     showScreen(SCREEN_SETTINGS);
+
+#endif
 }
 
 

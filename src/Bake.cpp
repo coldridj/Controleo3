@@ -60,9 +60,13 @@ void bake() {
 userChangedMindAboutAborting:
 
   // Setup the tap targets on this screen
+#ifdef TOUCH_ENABLE
   clearTouchTargets();
+#endif
   drawButton(110, 230, 260, 87, BUTTON_LARGE_FONT, (char *) "STOP");
+#ifdef TOUCH_ENABLE
   defineTouchArea(20, 150, 440, 170); // Large tap target to stop baking
+#endif
 
   // Toggle the baking temperature between C/F if the user taps in the top-right corner
   setTouchTemperatureUnitChangeCallback(displayBakeTemperatureAndDuration);
@@ -75,11 +79,14 @@ userChangedMindAboutAborting:
   displayBakePhase(bakePhase, abortDialogIsOnScreen);
 
   // Debounce any taps that took us to this screen
+#ifdef TOUCH_ENABLE
   debounce();
+#endif
 
   // Keep looping until baking is done
   while (1) {
     // Has there been a touch?
+#ifdef TOUCH_ENABLE
     switch (getTap(CHECK_FOR_TAP_THEN_EXIT)) {
       case 0: 
         // If baking is done (or user taps "stop" in Abort dialog) then clean up and return to the main menu
@@ -113,7 +120,8 @@ userChangedMindAboutAborting:
         // Redraw the screen under the dialog
         goto userChangedMindAboutAborting;
     }
-    
+#endif
+
     // Execute this loop every 20ms (50 times per second)
     if (millis() - lastLoopTime < 20) {
       delay(1);
@@ -166,8 +174,10 @@ userChangedMindAboutAborting:
       // Turn everything off
       setOvenOutputs(ELEMENTS_OFF, CONVECTION_FAN_OFF, COOLING_FAN_OFF);
       animateIcons(iconsX); 
-      // Wait for the user to tap the screen
+#ifdef TOUCH_ENABLE
+	  // Wait for the user to tap the screen
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       bakePhase = BAKING_PHASE_ABORT;
     }
 
@@ -373,7 +383,9 @@ void drawBakingAbortDialog()
   displayString(140, 110, FONT_12PT_BLACK_ON_WHITE, (char *) "Stop Baking");
   displayString(62, 150, FONT_9PT_BLACK_ON_WHITE, (char *) "Are you sure you want to stop");
   displayString(62, 180, FONT_9PT_BLACK_ON_WHITE, (char *) "baking?");
+#ifdef TOUCH_ENABLE
   clearTouchTargets();
+#endif
   drawTouchButton(60, 230, 160, 72, BUTTON_LARGE_FONT, (char *) "Stop");
   drawTouchButton(260, 230, 160, 105, BUTTON_LARGE_FONT, (char *) "Cancel");
 }

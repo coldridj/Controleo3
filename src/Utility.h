@@ -17,7 +17,7 @@ const char bmpHeader[54] PROGMEM = {
   0x0, 0x0, 0x0, 0x0
 };
 
-void takeScreenshot();
+// void takeScreenshot();
 uint32_t getFreeRAM();
 void checkFreeMemory();
 

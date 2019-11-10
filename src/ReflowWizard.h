@@ -18,8 +18,10 @@ extern Sd2Card card;
 extern SdVolume volume;
 extern SdFile root;
 
-extern Controleo3LCD tft;
+extern Controleo3LCDILI9341 tft;
+#ifdef TOUCH_ENABLE
 extern Controleo3Touch  touch;
+#endif
 extern Controleo3Flash  flash;
 extern Controleo3MAX31856 thermocouple;
 

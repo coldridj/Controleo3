@@ -1,3 +1,4 @@
+#ifdef TOUCH_ENABLE
 // Written by Peter Easton
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
@@ -398,14 +399,14 @@ int8_t getTap(uint8_t mode)
     }
 
     // See if this is a screenshot tap
-    if (x < 60 && y < 45) {
-      touchScreenshotTaps++;
-      if (touchScreenshotTaps % 3 == 0) {
-        // Take a screenshot now
-        takeScreenshot();
-      }
-      debounce();
-    }
+    // if (x < 60 && y < 45) {
+    //   touchScreenshotTaps++;
+    //   if (touchScreenshotTaps % 3 == 0) {
+    //     // Take a screenshot now
+    //     takeScreenshot();
+    //   }
+    //   debounce();
+    // }
 
     // If this if in the top right corner, toggle the temperature between Celsius and Farenheit
     if (mode != DONT_SHOW_TEMPERATURE && x > 340 && y < 50) {
@@ -441,7 +442,6 @@ void touchCallback()
   }
 }
 
-
 // Display the temperature on the screen once per second
 void displayTemperatureInHeader()
 {
@@ -458,3 +458,4 @@ void displayTemperatureInHeader()
   }
 }
 
+#endif

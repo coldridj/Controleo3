@@ -86,20 +86,27 @@ void learn() {
   // Ug, hate goto's!  But this saves a lot of extraneous code.
 userChangedMindAboutAborting:
 
+#ifdef TOUCH_ENABLE
   // Setup the tap targets on this screen
   clearTouchTargets();
+#endif
   drawButton(110, 230, 260, 87, BUTTON_LARGE_FONT, (char *) "STOP");
+#ifdef TOUCH_ENABLE
   defineTouchArea(20, 150, 440, 170); // Large tap target to stop learning
+#endif
 
   // Draw the status bar
   drawPerformanceBar(true, NO_PERFORMANCE_INDICATOR);
   displayString(133, 200, FONT_9PT_BLACK_ON_WHITE, (char *) "Phase Timer: ");
 
+#ifdef TOUCH_ENABLE
   // Debounce any taps that took us to this screen
   debounce();
+#endif
 
   // Keep looping until learning is done
   while (1) {
+#ifdef TOUCH_ENABLE
     // Has there been a touch?
     switch (getTap(CHECK_FOR_TAP_THEN_EXIT)) {
       case 0: 
@@ -134,6 +141,7 @@ userChangedMindAboutAborting:
         // Redraw the screen under the dialog
         goto userChangedMindAboutAborting;
     }
+#endif
     
     // Execute this loop every 20ms (50 times per second)
     if (millis() - lastLoopTime < 20) {
@@ -187,8 +195,10 @@ userChangedMindAboutAborting:
       // Turn everything off
       setOvenOutputs(ELEMENTS_OFF, CONVECTION_FAN_OFF, COOLING_FAN_OFF);
       animateIcons(iconsX); 
+#ifdef TOUCH_ENABLE
       // Wait for the user to tap the screen
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       learningPhase = LEARNING_PHASE_ABORT;
     }
 
@@ -523,7 +533,9 @@ void drawLearningAbortDialog()
   displayString(124, 126, FONT_12PT_BLACK_ON_WHITE, (char *) "Stop Learning");
   displayString(62, 165, FONT_9PT_BLACK_ON_WHITE, (char *) "Are you sure you want to stop");
   displayString(62, 195, FONT_9PT_BLACK_ON_WHITE, (char *) "learning?");
+#ifdef TOUCH_ENABLE
   clearTouchTargets();
+#endif
   drawTouchButton(60, 240, 160, 72, BUTTON_LARGE_FONT, (char *) "Stop");
   drawTouchButton(260, 240, 160, 105, BUTTON_LARGE_FONT, (char *) "Cancel");
 }

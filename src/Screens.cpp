@@ -21,7 +21,7 @@
 #include "Learn.h"
 
 extern void setTouchCallback(void (*f) (), uint16_t interval);
-extern boolean drawTemperatureOnScreenNow;
+boolean drawTemperatureOnScreenNow;
 
 void setTouchTemperatureUnitChangeCallback(void (*f) (boolean));
 
@@ -64,8 +64,10 @@ void showScreen(uint8_t screen)
     // and redrawing it will causes flicker as the screen refreshes.
 redraw:
 
+#ifdef TOUCH_ENABLE
     // Erase all touch targets
     clearTouchTargets();
+#endif
 
     // Set the flag to display the temperature on the screen as soon as possible
     drawTemperatureOnScreenNow = true;
@@ -79,23 +81,28 @@ redraw:
         drawTouchButton(110, 240, 260, 182, BUTTON_LARGE_FONT, (char *) "Settings");
         renderBitmap(BITMAP_SETTINGS, 285, 252);
 
+#ifdef TOUCH_ENABLE
         // Act on the tap
         switch(getTap(DONT_SHOW_TEMPERATURE)) {
           case 0: screen = SCREEN_REFLOW; break;
           case 1: screen = SCREEN_BAKE; break;
           case 2: screen = SCREEN_SETTINGS; break;
         }
+#endif
         break;
 
       case SCREEN_BAKE:
         // Draw the screen
         displayHeader((char *) "Bake", false);
+#ifdef TOUCH_ENABLE
         setTouchTemperatureUnitChangeCallback(displayBakeTemperatureAndDuration);
+#endif
         drawTouchButton(140, 100, 200, 56, BUTTON_SMALL_FONT, (char *) "Start");
         drawTouchButton(140, 180, 200, 96, BUTTON_SMALL_FONT, (char *) "Edit");
         renderBitmap(BITMAP_SETTINGS, 247, 192);
         drawNavigationButtons(true, true);
 
+#ifdef TOUCH_ENABLE
         // Act on the tap
         switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
           case 0: bake(); break;
@@ -105,6 +112,7 @@ redraw:
           case 4: showHelp(SCREEN_BAKE); goto redraw;
           case 5: screen = SCREEN_EDIT_BAKE1; break;
         }
+#endif
         break;
                 
       case SCREEN_EDIT_BAKE1:
@@ -123,6 +131,7 @@ redraw:
           tft.fillRect(130, LINE(3), 267, 24, WHITE);
           displayString(130, LINE(3), FONT_9PT_BLACK_ON_WHITE_FIXED, buffer100Bytes);
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: 
@@ -163,6 +172,7 @@ redraw:
             case 6: showHelp(SCREEN_EDIT_BAKE1); goto redraw;
             case 7: screen = SCREEN_EDIT_BAKE2;
           }
+#endif
           if (screen != SCREEN_EDIT_BAKE1)
             break;
         }
@@ -182,6 +192,7 @@ redraw:
           tft.fillRect(20, LINE(3), 434, 24, WHITE);
           displayString(20, LINE(3), FONT_9PT_BLACK_ON_WHITE, (char *) bakeUseCoolingFan[prefs.bakeUseCoolingFan]);
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: 
@@ -208,9 +219,11 @@ redraw:
             case 6: showHelp(SCREEN_EDIT_BAKE2); goto redraw;
             case 7: screen = SCREEN_BAKE;
           }
+#endif
           if (screen != SCREEN_EDIT_BAKE2)
             break;
         }
+
         break;
                 
       case SCREEN_REFLOW:
@@ -230,6 +243,7 @@ redraw:
         drawTouchButton(120, 180, 240, 170, BUTTON_SMALL_FONT, (char *) "Choose Profile");
         drawNavigationButtons(false, false);
 
+#ifdef TOUCH_ENABLE
         // Act on the tap
         switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
           case 0: reflow(prefs.selectedProfile); break;
@@ -238,6 +252,7 @@ redraw:
           case 3: screen = SCREEN_HOME; break;
           case 4: showHelp(SCREEN_REFLOW); goto redraw;
         }
+#endif
         break;
                 
        case SCREEN_CHOOSE_PROFILE:
@@ -250,10 +265,12 @@ redraw:
           drawTouchButton(260, 185, 210, 168, BUTTON_SMALL_FONT, (char *) "Read SD Card");
         }
         else {
+#ifdef TOUCH_ENABLE
           // Dummy areas for the arrows and delete button
           defineTouchArea(0, 0, 0, 0);
           defineTouchArea(0, 0, 0, 0);
           defineTouchArea(0, 0, 0, 0);
+#endif
           drawTouchButton(40, 105, 400, 330, BUTTON_SMALL_FONT, (char *) "Read Profiles from SD Card");
         }
         drawNavigationButtons(false, false);
@@ -269,6 +286,7 @@ redraw:
           if (prefs.numProfiles)
             displayString(20, LINE(1), FONT_9PT_BLACK_ON_WHITE, buffer100Bytes);
           
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: prefs.selectedProfile = (prefs.selectedProfile + prefs.numProfiles -1) % prefs.numProfiles; savePrefs(); break;
@@ -300,6 +318,7 @@ redraw:
             case 5: screen = SCREEN_HOME; break;
             case 6: showHelp(SCREEN_CHOOSE_PROFILE); goto redraw;
           }
+#endif
           if (screen != SCREEN_CHOOSE_PROFILE || !prefs.numProfiles)
             break;
         }
@@ -316,6 +335,7 @@ redraw:
         drawTouchButton(260, 195, 210, 69, BUTTON_SMALL_FONT, (char *) "About");
         drawNavigationButtons(false, false);
 
+#ifdef TOUCH_ENABLE
         // Act on the tap
         switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
           case 0: output = 0; screen = SCREEN_TEST; break;
@@ -328,12 +348,15 @@ redraw:
           case 7: screen = SCREEN_HOME; break;
           case 8: showHelp(SCREEN_SETTINGS); goto redraw;
         }
+#endif
         break;
         
       case SCREEN_TEST:
         // Draw the screen
         displayHeader((char *) "Test Outputs", false);
+#ifdef TOUCH_ENABLE
         defineTouchArea(40, 60, 400, 170); // Supersize the button
+#endif
         drawNavigationButtons(true, true);
         displayString(20, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Output");
 
@@ -358,6 +381,7 @@ redraw:
             drawTestOutputIcon(prefs.outputType[output], onOff);
           }
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: onOff = 1 - onOff;
@@ -383,6 +407,7 @@ redraw:
                       screen = SCREEN_SETTINGS;
                     break;
           }
+#endif
           // If no longer on this screen, go to the new one
           if (screen != SCREEN_TEST) {
             onOff = 0;
@@ -408,6 +433,7 @@ redraw:
           tft.fillRect(20, LINE(1), 440, 24, WHITE);
           displayString(20, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) longOutputDescription[prefs.outputType[output]]);
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: prefs.outputType[output] = (prefs.outputType[output] + NO_OF_TYPES - 1) % NO_OF_TYPES;
@@ -431,6 +457,7 @@ redraw:
                       screen = SCREEN_SERVO_OPEN;
                     break;
           }
+#endif
           // If no longer on this screen, go to the new one
           if (screen != SCREEN_SETUP_OUTPUTS)
             break;
@@ -450,6 +477,7 @@ redraw:
           displayFixedWidthString(255, LINE(0), buffer100Bytes, 4, FONT_9PT_BLACK_ON_WHITE_FIXED);
           setServoPosition(prefs.servoOpenDegrees, 1000);
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: 
@@ -476,6 +504,7 @@ redraw:
                     tft.fillRect(80, LINE(0), 250, 24, WHITE);
                     goto redraw;
           }
+#endif
           if (screen != SCREEN_SERVO_OPEN)
             break;
         }
@@ -494,6 +523,7 @@ redraw:
           displayFixedWidthString(265, LINE(0), buffer100Bytes, 4, FONT_9PT_BLACK_ON_WHITE_FIXED);
           setServoPosition(prefs.servoClosedDegrees, 1000);
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0: 
@@ -520,6 +550,7 @@ redraw:
             case 4: showHelp(SCREEN_SERVO_OPEN); goto redraw;
             case 5: screen = SCREEN_LINE_FREQUENCY; break;
           }
+#endif
           if (screen != SCREEN_SERVO_CLOSE)
             break;
         }
@@ -543,6 +574,7 @@ redraw:
             displayString(20, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "Europe, Africa, Asia, Australia");
           }
 
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0:
@@ -556,6 +588,7 @@ redraw:
             case 4: showHelp(SCREEN_LINE_FREQUENCY); goto redraw;
             case 5: screen = SCREEN_SETTINGS;
           }
+#endif
           if (screen != SCREEN_LINE_FREQUENCY)
             break;
         }
@@ -569,8 +602,10 @@ redraw:
         displayString(20, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Log time & temperature:");
         renderBitmap(BITMAP_DECREASE_ARROW, 40, LINE(1));
         renderBitmap(BITMAP_INCREASE_ARROW, 354, LINE(1));
+#ifdef TOUCH_ENABLE
         defineTouchArea(0, LINE(1)-10, 150, 60);
         defineTouchArea(330, LINE(1)-10, 150, 60);
+#endif
 
         // Reset and touch calibration
         displayString(20, 150, FONT_9PT_BLACK_ON_WHITE, (char *) "Reset:");
@@ -582,6 +617,7 @@ redraw:
         while (1) {
           displayString(prefs.logToSDCard? 140:179, LINE(1)+10, FONT_9PT_BLACK_ON_WHITE, prefs.logToSDCard? (char *) "Write to SD card" : (char *) "No logging");
 
+#ifdef TOUCH_ENABLE
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0:
             case 1:
@@ -609,6 +645,7 @@ redraw:
             case 5: screen = SCREEN_HOME; break;
             case 6: showHelp(SCREEN_RESET); goto redraw;
           }
+#endif
           // Clear this screen and go to the new screen (redraw this one if touch calibration was tapped)
           break;
         }
@@ -630,8 +667,8 @@ redraw:
         displayString(20, 130, FONT_9PT_BLACK_ON_WHITE, (char *) "Flash ID:");
         sprintf(buffer100Bytes, "%lX", flash.readUniqueID());
         displayString(129, 130, FONT_9PT_BLACK_ON_WHITE, buffer100Bytes);
-        displayString(20, 160, FONT_9PT_BLACK_ON_WHITE, (char *) "LCD Version:");
-        sprintf(buffer100Bytes, "%lX", tft.getLCDVersion());
+        // displayString(20, 160, FONT_9PT_BLACK_ON_WHITE, (char *) "LCD Version:");
+        // sprintf(buffer100Bytes, "%lX", tft.getLCDVersion());
         displayString(180, 160, FONT_9PT_BLACK_ON_WHITE, buffer100Bytes);
         displayString(20, 190, FONT_9PT_BLACK_ON_WHITE, (char *) "Free RAM:");
         sprintf(buffer100Bytes, "%ld bytes (%ld%% free)", getFreeRAM(), getFreeRAM() / 320); // Has 32KB RAM
@@ -644,12 +681,13 @@ redraw:
         displayString(363, 220, FONT_9PT_BLACK_ON_WHITE, buffer100Bytes);
 
         drawNavigationButtons(false, true);
-
+#ifdef TOUCH_ENABLE
         switch(getTap(DONT_SHOW_TEMPERATURE)) {
           case 0: screen = SCREEN_SETTINGS; break;
           case 1: screen = SCREEN_HOME; break;
           case 2: showHelp(SCREEN_ABOUT); goto redraw;
         }
+#endif
         break;
  
        case SCREEN_PID_TUNING:
@@ -662,18 +700,24 @@ redraw:
         // Power
         renderBitmap(BITMAP_DECREASE_ARROW, 10, BL_LINE(0));
         renderBitmap(BITMAP_INCREASE_ARROW, 384, BL_LINE(0));
+#ifdef TOUCH_ENABLE
         defineTouchArea(0, BL_LINE(0)-10, 120, 60);
         defineTouchArea(360, BL_LINE(0)-10, 120, 60);
+#endif
         // Inertia
         renderBitmap(BITMAP_DECREASE_ARROW, 10, BL_LINE(1));
         renderBitmap(BITMAP_INCREASE_ARROW, 384, BL_LINE(1));
+#ifdef TOUCH_ENABLE
         defineTouchArea(0, BL_LINE(1)-10, 120, 60);
         defineTouchArea(360, BL_LINE(1)-10, 120, 60);
+#endif
         // Insulation
         renderBitmap(BITMAP_DECREASE_ARROW, 10, BL_LINE(2));
         renderBitmap(BITMAP_INCREASE_ARROW, 384, BL_LINE(2));
+#ifdef TOUCH_ENABLE
         defineTouchArea(0, BL_LINE(2)-10, 120, 60);
         defineTouchArea(360, BL_LINE(2)-10, 120, 60);
+#endif
         drawNavigationButtons(false, false);
 
         // Map existing values to the bypass values
@@ -687,6 +731,7 @@ redraw:
         displayString(insulationX[bypassInsulation], BL_TEXT(2), FONT_9PT_BLACK_ON_WHITE, (char *) insulationDescription[bypassInsulation]);
 
         while (1) {
+#ifdef TOUCH_ENABLE
           // Act on the tap
           switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
             case 0:
@@ -735,6 +780,7 @@ redraw:
             case 7: screen = SCREEN_HOME; break;
             case 8: showHelp(SCREEN_PID_TUNING); goto redraw;
           }
+#endif
           if (screen != SCREEN_PID_TUNING) {
             // See if the learned values should be overwitten
             if (prefs.learningComplete == LEARNING_DONE) {
@@ -744,11 +790,15 @@ redraw:
               displayString(159, 117, FONT_12PT_BLACK_ON_WHITE, (char *) "Overwrite");
               displayString(40, 150, FONT_9PT_BLACK_ON_WHITE, (char *) "Do you want to overwrite the");
               displayString(40, 180, FONT_9PT_BLACK_ON_WHITE, (char *) "learned values?");
+#ifdef TOUCH_ENABLE
               clearTouchTargets();
+#endif
               drawTouchButton(60, 230, 160, 60, BUTTON_LARGE_FONT, (char *) "Yes");
               drawTouchButton(260, 230, 160, 43, BUTTON_LARGE_FONT, (char *) "No");
+#ifdef TOUCH_ENABLE
               if (getTap(SHOW_TEMPERATURE_IN_HEADER) == 0)
-                prefs.learningComplete = LEARNING_BYPASSED;
+				prefs.learningComplete = LEARNING_BYPASSED;
+#endif
             }
 
             // Save the values if learning not done or has been bypassed
@@ -795,6 +845,7 @@ redraw:
         drawTouchButton(100, 180, 280, 164, BUTTON_SMALL_FONT, (char *) "Start Learning");
         drawNavigationButtons(false, true);
 
+#ifdef TOUCH_ENABLE
         // Act on the tap
         switch(getTap(SHOW_TEMPERATURE_IN_HEADER)) {
           case 0: learn(); break;
@@ -806,6 +857,7 @@ redraw:
                     showHelp(SCREEN_LEARNING);
                   goto redraw;
         }
+#endif
         break;            
     }  // end of switch  
   } // end of while (1)
@@ -814,7 +866,9 @@ redraw:
 
 void drawTouchButton(uint16_t x, uint16_t y, uint16_t width, uint16_t textWidth, boolean useLargeFont, char *text) {
   drawButton(x, y, width, textWidth, useLargeFont, text);
+#ifdef TOUCH_ENABLE
   defineTouchArea(x, y, width, BUTTON_HEIGHT);
+#endif
 }
 
 
@@ -828,17 +882,25 @@ void drawNavigationButtons(boolean addRightArrow, boolean largeTargets)
   
   // Left Arrow button
   renderBitmap(BITMAP_LEFT_ARROW, 10, 275);
+#ifdef TOUCH_ENABLE
   defineTouchArea(0, top, 138, height);
+#endif
   // Home button
   renderBitmap(BITMAP_HOME, 172, 275);
+#ifdef TOUCH_ENABLE
   defineTouchArea(139, top, 100, height);
+#endif
   // Help button
   renderBitmap(BITMAP_HELP, 276, 275);
+#ifdef TOUCH_ENABLE
   defineTouchArea(240, top, 100, height);
+#endif
   if (addRightArrow) {
     // Right Arrow button
     renderBitmap(BITMAP_RIGHT_ARROW, 378, 275);
+#ifdef TOUCH_ENABLE
     defineTouchArea(341, top, 138, height);
+#endif
   }
 }
 
@@ -885,19 +947,25 @@ void drawIncreaseDecreaseTapTargets(uint8_t targetType)
   if (targetType == TWO_SETTINGS) {
     renderBitmap(BITMAP_DECREASE_ARROW, 123, LINE(1));
     renderBitmap(BITMAP_INCREASE_ARROW, 270, LINE(1));
+#ifdef TOUCH_ENABLE
     defineTouchArea(80, LINE(0), 160, 85);
     defineTouchArea(241, LINE(0), 160, 85);
+#endif
     renderBitmap(BITMAP_DECREASE_ARROW, 123, LINE(4));
     renderBitmap(BITMAP_INCREASE_ARROW, 270, LINE(4));
+#ifdef TOUCH_ENABLE
     defineTouchArea(80, LINE(3), 160, 85);
     defineTouchArea(241, LINE(3), 160, 85);
+#endif
   }
   else {
     // There is one setting that can be changed on this screen
     renderBitmap(BITMAP_DECREASE_ARROW, 123, targetType == ONE_SETTING_WITH_TEXT? LINE(3):LINE(2));
     renderBitmap(BITMAP_INCREASE_ARROW, 270, targetType == ONE_SETTING_WITH_TEXT? LINE(3):LINE(2));
+#ifdef TOUCH_ENABLE
     defineTouchArea(80, LINE(1), 160, targetType == ONE_SETTING_TEXT_BUTTON? 100:140);
     defineTouchArea(241, LINE(1), 160, targetType == ONE_SETTING_TEXT_BUTTON? 100:140);
+#endif
   }
 }
 
@@ -910,9 +978,11 @@ uint8_t testOutputType;
 // Used when user is testing their relays
 void drawTestOutputIcon(uint8_t type, boolean outputIsOn)
 {
+#ifdef TOUCH_ENABLE
   // Stop any touch callback used to animate icons
   setTouchIntervalCallback(0, 0);
-  
+#endif
+
   // Display an icon corresponding to the output
   switch(type) {
     case TYPE_UNUSED:
@@ -928,9 +998,11 @@ void drawTestOutputIcon(uint8_t type, boolean outputIsOn)
     default:
       // This is either a convection or cooling fan
       testOutputType = type;
+#ifdef TOUCH_ENABLE
       // Start a touch callback to animate the icon (15Hz = 67ms) if the output is on
       if (outputIsOn)
         setTouchIntervalCallback(testOutputIconAnimator, 67);
+#endif
       // Call the callback now to display the icon
       testOutputIconAnimator();
   }

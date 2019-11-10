@@ -106,49 +106,49 @@ void animateIcons(uint16_t x)
 
 // Take a screenshot.  This is a "blocking" call - so nothing else gets processed
 // while this is happening
-void takeScreenshot() 
-{
-  char buf[320 * 3];
-  // Initialize the SD card
-  if (!SD.begin()) {
-    SerialUSB.println("Card failed, or not present");
-    return;
-  }
+// void takeScreenshot() 
+// {
+//   char buf[320 * 3];
+//   // Initialize the SD card
+//   if (!SD.begin()) {
+//     SerialUSB.println("Card failed, or not present");
+//     return;
+//   }
   
-  // Open the file for writing
-  sprintf(buf, "C3_%05d.bmp", prefs.screenshotNumber);
-  File dataFile = SD.open(buf, FILE_WRITE);
-  if (!dataFile) {
-    SerialUSB.println("Can't open " + String(buf));
-    return;
-  }
-  SerialUSB.println("Writing screenshot to " + String(buf));
+//   // Open the file for writing
+//   sprintf(buf, "C3_%05d.bmp", prefs.screenshotNumber);
+//   File dataFile = SD.open(buf, FILE_WRITE);
+//   if (!dataFile) {
+//     SerialUSB.println("Can't open " + String(buf));
+//     return;
+//   }
+//   SerialUSB.println("Writing screenshot to " + String(buf));
   
-  // Write the bitmap header
-  memcpy_P(buf, bmpHeader, 54);
-  dataFile.seek(0);
-  dataFile.write(buf, 54);
+//   // Write the bitmap header
+//   memcpy_P(buf, bmpHeader, 54);
+//   dataFile.seek(0);
+//   dataFile.write(buf, 54);
 
-  // Start the screen read
-  tft.startReadBitmap(0, 0, 480, 320);
+//   // Start the screen read
+//   tft.startReadBitmap(0, 0, 480, 320);
 
-  // Keeping reading from the screen and writing to the SD card
-  for (uint16_t i=0; i< 480; i++) {
-    tft.readBitmap24bit((uint8_t *) buf, 320);
-    dataFile.write(buf, 320 * 3);
-    // Beep every 1/12 of the operation to let the user know something is happening
-    if (i % 40 == 0)
-      playTones(TUNE_SCREENSHOT_BUSY);
-  }
-  tft.endReadBitmap();
-  dataFile.close();
+//   // Keeping reading from the screen and writing to the SD card
+//   for (uint16_t i=0; i< 480; i++) {
+//     tft.readBitmap24bit((uint8_t *) buf, 320);
+//     dataFile.write(buf, 320 * 3);
+//     // Beep every 1/12 of the operation to let the user know something is happening
+//     if (i % 40 == 0)
+//       playTones(TUNE_SCREENSHOT_BUSY);
+//   }
+//   tft.endReadBitmap();
+//   dataFile.close();
 
-  // Increase the file number for the next screenshot
-  prefs.screenshotNumber = (prefs.screenshotNumber + 1) % 10000;
-  savePrefs();
-  playTones(TUNE_SCREENSHOT_DONE);
-  SerialUSB.println("Screenshot written!");
-}
+//   // Increase the file number for the next screenshot
+//   prefs.screenshotNumber = (prefs.screenshotNumber + 1) % 10000;
+//   savePrefs();
+//   playTones(TUNE_SCREENSHOT_DONE);
+//   SerialUSB.println("Screenshot written!");
+// }
 
 
 extern "C" char *sbrk(int i);

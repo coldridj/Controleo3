@@ -27,7 +27,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "Setup - Configure oven");
       displayHelpLine((char *) "PID Tuning - Manual PID tuning");
       displayHelpLine((char *) "About - Version information");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(435, HELP_BOX_HEIGHT(6));
       break;
@@ -41,7 +43,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "outputs on and off individually to");
       displayHelpLine((char *) "ensure they have been wired");
       displayHelpLine((char *) "correctly and are working.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(440, HELP_BOX_HEIGHT(7));
       break;
@@ -54,7 +58,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "are used to determine which");
       displayHelpLine((char *) "outputs (or relays) are turned on"); 
       displayHelpLine((char *) "and off during a bake or reflow.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(430, HELP_BOX_HEIGHT(6));
       break;
@@ -68,7 +74,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "again once the oven is safe to"); 
       displayHelpLine((char *) "handle.  If movement is jerky you");
       displayHelpLine((char *) "need a better 5V power supply.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(445, HELP_BOX_HEIGHT(7));
       break;
@@ -81,7 +89,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "the accuracy of the temperature"); 
       displayHelpLine((char *) "readings.  It filters noise introduced"); 
       displayHelpLine((char *) "by the 110V/230V power lines.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(445, HELP_BOX_HEIGHT(6));
       break;
@@ -95,7 +105,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "settings, and return them to their");
       displayHelpLine((char *) "default values.  Stored profiles");
       displayHelpLine((char *) "are also erased.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(445, HELP_BOX_HEIGHT(7));
       break;
@@ -107,7 +119,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "overwite them here.");
       displayHelpLine((char *) "Give honest ratings for oven power,");
       displayHelpLine((char *) "inertia and insulation.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(445, HELP_BOX_HEIGHT(5));
       break;
@@ -121,7 +135,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "to write the bitmap to the SD card."); 
       displayHelpLine((char *) "The software freezes while taking a"); 
       displayHelpLine((char *) "screenshot so be careful using it!"); 
+#ifdef TOUCH_ENABLE
       getTap(DONT_SHOW_TEMPERATURE);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(445, HELP_BOX_HEIGHT(7));
       break;
@@ -135,7 +151,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "reflowing them.");
       displayHelpLine((char *) "You can also bake other non-food"); 
       displayHelpLine((char *) "items in the oven."); 
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(460, HELP_BOX_HEIGHT(6));
       break;
@@ -149,7 +167,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "on at the same time. The fan will"); 
       displayHelpLine((char *) "only be turned on if the oven door"); 
       displayHelpLine((char *) "is open."); 
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(450, HELP_BOX_HEIGHT(7));
       break;
@@ -162,7 +182,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "and loaded using a SD card.  See");
       displayHelpLine((char *) "https://whizoo.com/profiles for");
       displayHelpLine((char *) "more information.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(450, HELP_BOX_HEIGHT(6));
       break;
@@ -175,7 +197,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "canbe loaded using a SD card.  See");
       displayHelpLine((char *) "https://whizoo.com/profiles for");
       displayHelpLine((char *) "more information.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(455, HELP_BOX_HEIGHT(6));
       break;
@@ -187,7 +211,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "Settings and configure which");
       displayHelpLine((char *) "outputs control which heating");
       displayHelpLine((char *) "elements."); 
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       break;
 
     case SCREEN_LEARNING:
@@ -200,7 +226,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "desired temperature, and how"); 
       displayHelpLine((char *) "slowly does it cools down.  Oven"); 
       displayHelpLine((char *) "insulation is also measured."); 
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(440, HELP_BOX_HEIGHT(8));
       break;
@@ -211,7 +239,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "through the learning cycle."); 
       displayHelpLine((char *) "Please go to Settings and tap");
       displayHelpLine((char *) "the \"Learning\" button.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       break;
 
     case HELP_NO_SD_CARD:
@@ -222,7 +252,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "SD card is present.");
       displayHelpLine((char *) "Please insert a SD card or disable");
       displayHelpLine((char *) "logging in the Settings menu.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       break;
 
     case HELP_BAD_FORMAT:
@@ -233,7 +265,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "SD card appears to be incorrectly");
       displayHelpLine((char *) "formatted.  Please format it using");
       displayHelpLine((char *) "FAT16 or FAT32.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       break;
 
     case HELP_CANT_WRITE_TO_SD_CARD:
@@ -242,7 +276,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) "temperature data to the SD");
       displayHelpLine((char *) "card has been enabled but there's");
       displayHelpLine((char *) "a problem writing to it.");
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       break;
 
     case SCREEN_RESULTS:
@@ -255,7 +291,9 @@ void showHelp(uint8_t screen)
       displayHelpLine((char *) " (lower is better)."); 
       displayHelpLine((char *) "Insulation: Time to cool 30~C"); 
       displayHelpLine((char *) " (higher is better)."); 
+#ifdef TOUCH_ENABLE
       getTap(SHOW_TEMPERATURE_IN_HEADER);
+#endif
       // Clear the area used by Help.  The screen will need to be redrawn
       eraseHelpScreen(440, HELP_BOX_HEIGHT(8));
       break;
@@ -279,10 +317,12 @@ void drawHelpBorder(uint16_t width, uint16_t height)
   // Add the small help icon
   renderBitmap(BITMAP_HELP_ICON, x+width-81, top+6);
   
+#ifdef TOUCH_ENABLE
   // Clear the existing touch targets and add one that takes up the entire screen, less the
   // title area which is needed to be able to screenshots.
   clearTouchTargets();
   defineTouchArea(0, 45, 479, 319);
+#endif
 
   // Define where the first line of text appears
   nextHelpLineY = top + 13;

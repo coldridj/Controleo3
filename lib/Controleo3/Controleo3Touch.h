@@ -1,3 +1,5 @@
+#ifdef TOUCH_ENABLE
+
 // Written by Peter Easton
 // Released under CC BY-NC-SA 3.0 license
 // Build a reflow oven: http://whizoo.com
@@ -12,10 +14,10 @@
 #include "bits.h"
 #include "ILI9488.h"
 
-#define LCD_WIDTH  		480
-#define LCD_HEIGHT 		320
-#define LCD_MAX_X		479
-#define LCD_MAX_Y		319
+// #define LCD_WIDTH  		480
+// #define LCD_HEIGHT 		320
+// #define LCD_MAX_X		479
+// #define LCD_MAX_Y		319
 
 
 // CLK is D4 (PA8)
@@ -63,3 +65,4 @@ class Controleo3Touch
 };
 
 #endif // CONTROLEO3TOUCH_H_
+#endif

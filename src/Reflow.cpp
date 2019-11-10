@@ -151,11 +151,14 @@ userChangedMindAboutAborting:
   // Display the status (if waiting)
   updateStatusMessage(token, countdownTimer, desiredTemperature, abortDialogIsOnScreen);
   
+  #ifdef TOUCH_ENABLE
   // Debounce any taps that took us to this screen
   debounce();
+  #endif
 
   // Keep looping until reflow is done
   while (1) {
+#ifdef TOUCH_ENABLE
     // Waiting for the user to tap the screen?
     if (reflowPhase == REFLOW_WAITING_FOR_TAP && touch.isPressed()) {
       updateStatusMessage(NOT_A_TOKEN, 0, 0, abortDialogIsOnScreen);
@@ -163,7 +166,7 @@ userChangedMindAboutAborting:
       quickDebounce();
       reflowPhase = REFLOW_PHASE_NEXT_COMMAND;
     }
-    
+
     // Has there been a touch?
     switch (getTap(CHECK_FOR_TAP_THEN_EXIT)) {
       case 0: 
@@ -197,6 +200,7 @@ userChangedMindAboutAborting:
         // Redraw the screen under the dialog
         goto userChangedMindAboutAborting;
     }
+#endif
     
     // Execute this loop every 20ms (50 times per second)
     if (millis() - lastLoopTime < 20) {
@@ -778,21 +782,27 @@ userChangedMindAboutAborting:
 // Draw the STOP/DONE button on the screen
 void drawStopDoneButton(boolean isGraphDisplayed, boolean buttonIsStop)
 {
+#ifdef TOUCH_ENABLE
   clearTouchTargets();
+#endif
 
   if (isGraphDisplayed) {
       // Draw the button
       tft.fillRect(368, 247, 94, 26, WHITE);
       drawButton(352, 230, 126, buttonIsStop? 87: 93, BUTTON_LARGE_FONT, buttonIsStop? (char *) "STOP" : (char *) "DONE");
+#ifdef TOUCH_ENABLE
       // Define the tap target (as large as possible)
       defineTouchArea(320, 200, 160, 120);
+#endif
   }
   else {
       // Draw the button
       tft.fillRect(194, 247, 94, 26, WHITE);
       drawButton(110, 230, 260, buttonIsStop? 87: 93, BUTTON_LARGE_FONT, buttonIsStop? (char *) "STOP" : (char *) "DONE");
+#ifdef TOUCH_ENABLE
       // Define the tap target (as large as possible)
       defineTouchArea(20, 150, 440, 170);
+#endif
   }
 }
 
@@ -803,7 +813,9 @@ void drawReflowAbortDialog()
   tft.fillRect(10, 110, 460, 200, WHITE);
   displayString(126, 116, FONT_12PT_BLACK_ON_WHITE, (char *) "Stop Running");
   displayString(54, 157, FONT_9PT_BLACK_ON_WHITE, (char *) "Are you sure you want to stop?");
+#ifdef TOUCH_ENABLE
   clearTouchTargets();
+#endif
   drawTouchButton(60, 232, 160, 74, BUTTON_LARGE_FONT, (char *) "Stop");
   drawTouchButton(260, 232, 160, 105, BUTTON_LARGE_FONT, (char *) "Cancel");
 }
@@ -894,7 +906,11 @@ void showReflowError(uint16_t iconsX, char *line1, char *line2)
       displayTemperatureInHeader(); 
       updateTemperatureInHeader += 1000;
     }
+#ifdef TOUCH_ENABLE
   } while (getTap(CHECK_FOR_TAP_THEN_EXIT) == -1);
+#else
+  } while (true);
+#endif
 }
 
 

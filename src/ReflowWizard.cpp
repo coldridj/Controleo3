@@ -8,8 +8,10 @@ Sd2Card card;
 SdVolume volume;
 SdFile root;
 
-Controleo3LCD tft;
+Controleo3LCDILI9341 tft;
+#ifdef TOUCH_ENABLE
 Controleo3Touch  touch;
+#endif
 Controleo3Flash  flash;
 Controleo3MAX31856 thermocouple;
 

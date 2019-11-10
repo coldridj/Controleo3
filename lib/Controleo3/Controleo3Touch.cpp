@@ -1,3 +1,5 @@
+#ifdef TOUCH_ENABLE
+
 // Written by Peter Easton
 // Released under CC BY-NC-SA 3.0 license
 // Build a reflow oven: http://whizoo.com
@@ -198,3 +200,5 @@ uint16_t Controleo3Touch::read12()
 	}
 	return data;
 }
+
+#endif
