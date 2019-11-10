@@ -1,7 +1,13 @@
+#ifndef ReflowWizard_Bitmaps_H
+#define ReflowWizard_Bitmaps_H
+
 // Written by Peter Easton
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 //
+
+#include <Arduino.h>
+
 //
 // All the bitmaps exist in external flash, but some are duplicated in microcontroller flash.
 // Reading from microcontroller flash is 20 times faster than external flash, so it makes sense
@@ -5780,3 +5786,4 @@ const uint16_t *flashBitmaps[258] PROGMEM =
     bmp240,bmp241,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 };
 
+#endif

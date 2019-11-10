@@ -2,6 +2,11 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "ReadProfiles.h"
+#include "Render.h"
+#include "Prefs.h"
 
 // Read all the profiles from the SD card.  The profiles can be in sub-directories
 

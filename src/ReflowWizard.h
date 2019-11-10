@@ -2,9 +2,26 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#ifndef ReflowWizard_H
+#define ReflowWizard_H
+
+#include <Arduino.h>
+#include <Controleo3.h> // Hardware-specific library
 
 #define CONTROLEO3_VERSION             "1.5"
 
+// Global temporary buffers (used everywhere)
+extern char buffer100Bytes[100];
+extern uint8_t flashBuffer256Bytes[256];     // Read/write from flash.  This is the size of a flash block
+
+extern Sd2Card card;
+extern SdVolume volume;
+extern SdFile root;
+
+extern Controleo3LCD tft;
+extern Controleo3Touch  touch;
+extern Controleo3Flash  flash;
+extern Controleo3MAX31856 thermocouple;
 
 // Fonts
 #define FONT_9PT_BLACK_ON_WHITE        0
@@ -134,16 +151,8 @@
 #define MAX_TOP_DUTY_CYCLE             80  
 #define MAX_BOOST_DUTY_CYCLE           60
 
-const char *outputDescription[NO_OF_TYPES] = {"Unused", "Bottom Element", "Top Element", "Boost Element", "Convection Fan","Cooling Fan"};
-const char *longOutputDescription[NO_OF_TYPES] = {
-  "",
-  "Controls the bottom heating element.",
-  "Controls the top heating element.",
-  "Controls the boost heating element.",
-  "On at start, off once cooling is done.",
-  "Turns on to cool the oven."
-};
-
+extern const char *outputDescription[];
+extern const char *longOutputDescription[];
 
 // Reflow defines
 #define REFLOW_PHASE_NEXT_COMMAND      0  // Get the next command (token) in the profile
@@ -163,16 +172,9 @@ const char *longOutputDescription[NO_OF_TYPES] = {
 #define BAKE_DOOR_LEAVE_CLOSED         2
 #define BAKE_DOOR_LAST_OPTION          2
 
-const char *bakeDoorDescription[BAKE_DOOR_LAST_OPTION+1] = {
-  "Open oven door after bake.",
-  "Open after bake, close when cool.",
-  "Leave oven door closed."
-};
+extern const char *bakeDoorDescription[];
 
-const char *bakeUseCoolingFan[2] = {
-  "Use cooling fan once baking is done.",
-  "Don't use the cooling fan."
-};
+extern const char *bakeUseCoolingFan[];
 
 #define BAKE_MAX_DURATION              127  // 127 = 168 hours (see getBakeSeconds)
 #define BAKE_TEMPERATURE_STEP          5    // Step between temperature settings
@@ -185,8 +187,8 @@ const char *bakeUseCoolingFan[2] = {
 #define BAKING_PHASE_COOLING           3    // Wait till the oven has cooled down to 50°C
 #define BAKING_PHASE_DONE              4    // Baking is done.  Stay on this screen
 #define BAKING_PHASE_ABORT             5    // Baking was aborted
-const char *bakePhaseStr[] = {"Pre-heat", "Baking", "Cooling", "Baking has finished", "Baking has finished", ""};
-const uint8_t bakePhaseStrPosition[] = {190, 202, 198, 128, 128, 0};
+extern const char *bakePhaseStr[];
+extern const uint8_t bakePhaseStrPosition[];
 
 
 // Should the temperature be displayed while waiting for a tap?
@@ -294,5 +296,8 @@ struct Controleo3Prefs {
   uint16_t  logNumber;                        // Log file sequential number
 
   uint8_t   spare[96];                        // Spare bytes that are initialized to zero.  Aids future expansion
-} prefs;
+};
 
+extern Controleo3Prefs prefs;
+
+#endif

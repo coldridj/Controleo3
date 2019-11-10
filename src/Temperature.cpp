@@ -2,6 +2,9 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Temperature.h"
 
 #define CR0_INIT  (CR0_AUTOMATIC_CONVERSION + CR0_OPEN_CIRCUIT_FAULT_TYPE_K /* + CR0_NOISE_FILTER_50HZ */)
 #define CR1_INIT  (CR1_AVERAGE_2_SAMPLES + CR1_THERMOCOUPLE_TYPE_K)

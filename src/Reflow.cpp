@@ -2,6 +2,22 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Reflow.h"
+#include "Outputs.h"
+#include "Help.h"
+#include "Prefs.h"
+#include "ReadProfiles.h"
+#include "Screens.h"
+#include "Touch.h"
+#include "Tones.h"
+#include "Bake.h"
+#include "Temperature.h"
+#include "Servo.h"
+#include "Render.h"
+#include "Utility.h"
+
 #define BUTTON_DONE      0
 #define BUTTON_STOP      1
 

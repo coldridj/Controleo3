@@ -2,6 +2,19 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "Learn.h"
+#include "Outputs.h"
+#include "Help.h"
+#include "Touch.h"
+#include "Render.h"
+#include "Bake.h"
+#include "Temperature.h"
+#include "Screens.h"
+#include "Utility.h"
+#include "Prefs.h"
+#include "Servo.h"
+#include "Tones.h"
 
 #define LEARNING_PHASE_INITIAL_RAMP         0
 #define LEARNING_PHASE_CONSTANT_TEMP        1

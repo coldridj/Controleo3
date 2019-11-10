@@ -2,6 +2,9 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Outputs.h"
 
 // There are 6 outputs on Controleo3:
 // Outputs 1 through 5
@@ -22,7 +25,6 @@
 //  - Output 6 = PB11 (Arduino = SCK)
 //
 //  On the board (and in the build guide) the outputs are 1 through 6. In software they are 0 through 5.
-
 
 volatile uint32_t *portAOut, *portAMode, *portBOut, *portBMode;
 static boolean outputState[NUMBER_OF_OUTPUTS];

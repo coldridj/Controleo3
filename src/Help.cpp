@@ -2,6 +2,11 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Help.h"
+#include "Touch.h"
+#include "Render.h"
 
 // Shows context-sensitive help for the various screens
 

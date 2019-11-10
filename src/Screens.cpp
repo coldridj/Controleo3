@@ -2,6 +2,22 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "Screens.h"
+#include "Render.h"
+#include "Touch.h"
+#include "Utility.h"
+#include "Bake.h"
+#include "Help.h"
+#include "Prefs.h"
+#include "Tones.h"
+#include "Reflow.h"
+#include "ReadProfiles.h"
+#include "Outputs.h"
+#include "Servo.h"
+#include "Temperature.h"
+#include "Screens.h"
+#include "Learn.h"
 
 extern void setTouchCallback(void (*f) (), uint16_t interval);
 extern boolean drawTemperatureOnScreenNow;

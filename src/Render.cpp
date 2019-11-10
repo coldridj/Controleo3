@@ -2,6 +2,10 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Render.h"
+#include "Bitmaps.h"
 
 // Some fonts are fixed width.  This is so that when updating a field (like temperature), you can just overwrite
 // the previous number instead of erasing the number and then redrawing it.

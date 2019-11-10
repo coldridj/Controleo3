@@ -2,6 +2,19 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Bake.h"
+#include "Outputs.h"
+#include "Temperature.h"
+#include "Help.h"
+#include "Touch.h"
+#include "Render.h"
+#include "Screens.h"
+#include "Utility.h"
+#include "Servo.h"
+#include "Prefs.h"
+#include "Tones.h"
 
 // Stay in this function until the bake is done or canceled
 void bake() {
@@ -23,7 +36,7 @@ void bake() {
     return;
   }
 
-  // Initialize varaibles used for baking
+  // Initialize variables used for baking
   secondsLeftOfBake = getBakeSeconds(prefs.bakeDuration);
   // Start with a duty cycle proportional to the desired temperature
   bakeDutyCycle = map(prefs.bakeTemperature, 0, 250, 0, 100);

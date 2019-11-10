@@ -2,6 +2,16 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Touch.h"
+#include "Render.h"
+#include "Tones.h"
+#include "Screens.h"
+#include "Prefs.h"
+#include "Utility.h"
+#include "Temperature.h"
+#include <Controleo3.h>
 
 #define MAX_CALIBRATION_TIME  60000  // 60 seconds
 #define MAX_TAP_TARGETS    20

@@ -2,6 +2,9 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Prefs.h"
 
 // Preferences are stored in 4K blocks.  There are 4 blocks, and they are rotated for each write to
 // maximixe redundancy and minimize write wear.  Blocks have a 32-bit sequence number as the first
@@ -69,7 +72,7 @@ void getPrefs()
     prefs.lastUsedProfileBlock = FIRST_PROFILE_BLOCK;
   }
 
-  SerialUSB.println("Read prefs from block " + String(prefsToUse) + ". Seq No=" + String(prefs.sequenceNumber) + " size=" + String(sizeof(prefs)));
+  SerialUSB.println("Read prefs from block " + String(prefsToUse) + ". Seq No=" + String(prefs.sequenceNumber) + " size=" + String((unsigned long)sizeof(prefs)));
 
   // Remember which block was last used to save prefs
   lastPrefsBlock = prefsToUse;

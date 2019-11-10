@@ -2,6 +2,11 @@
 // Released under the MIT license
 // Build a reflow oven: https://whizoo.com
 
+#include <Arduino.h>
+#include "ReflowWizard.h"
+#include "Servo.h"
+#include "Outputs.h"
+#include "Temperature.h"
 
 // Timer TC3 is used for 2 things:
 // 1. Take thermocouple readings every 200ms (5 times per second)
