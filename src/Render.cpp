@@ -25,9 +25,9 @@ uint16_t renderBitmap(uint16_t bitmapNumber, uint16_t x, uint16_t y) {
 	bitmapHeight = *(fontBitmap++);
 	bitmapWidth = *(fontBitmap++);
 
-	Serial.print("bitmapNumber: "); Serial.print(bitmapNumber);
-	Serial.print(" height: "); Serial.print(bitmapHeight);
-	Serial.print(" width: "); Serial.println(bitmapWidth);
+	// Serial.print("bitmapNumber: "); Serial.print(bitmapNumber);
+	// Serial.print(" height: "); Serial.print(bitmapHeight);
+	// Serial.print(" width: "); Serial.println(bitmapWidth);
 
 	tft.drawBitmapFull(x, y, (uint16_t *) fontBitmap, bitmapWidth, bitmapHeight);
 	// // Render from microcontroller flash, if the bitmap exists there

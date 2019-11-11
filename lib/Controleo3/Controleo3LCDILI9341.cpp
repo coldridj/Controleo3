@@ -15,6 +15,7 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_ILI9341.h>
+#include <SPI.h>
 
 // For the Adafruit shield, these are the default.
 #define tft9341_DC 9
@@ -27,7 +28,8 @@
 // Use hardware SPI (on Uno, #13, #12, #11) and the above for CS/DC
 // Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(tft9341_CS, tft9341_DC);
 // If using the breakout, change pins as desired
-Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(tft9341_CS, tft9341_DC, tft9341_MOSI, tft9341_CLK, tft9341_RST, tft9341_MISO);;
+Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(&SPI, tft9341_DC, tft9341_CS, tft9341_RST);
+//Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(tft9341_CS, tft9341_DC, tft9341_MOSI, tft9341_CLK, tft9341_RST, tft9341_MISO);;
 
 // Constructor for the tft9341 display
 Controleo3LCDILI9341::Controleo3LCDILI9341(void)

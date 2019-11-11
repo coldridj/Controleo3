@@ -4,20 +4,20 @@
 
 #include <Arduino.h>
 #include "ReflowWizard.h"
-// #include "Outputs.h"
+#include "Outputs.h"
 // #include "Prefs.h"
 #include "Render.h"
 // #include "Tones.h"
 // #include "Temperature.h"
 // #include "Servo.h"
 // #include "Touch.h"
-// #include "Screens.h"
+#include "Screens.h"
 
 // #define SD_ENABLE // process the SD card
 // #define OUTPUT_ENABLE // process outputs
 
 void setup() {
-	Serial.begin(115200);
+	//Serial.begin(115200);
 	delay(1000);
 #ifdef OUTPUT_ENABLE
 	// First priority - turn off the relays!
@@ -76,7 +76,7 @@ void setup() {
 	renderBitmap(BITMAP_COOLING_FAN3, 40, 0);
 	//renderBitmap(BITMAP_WHIZOO, 84, 200);
 	displayString(0, 92, FONT_9PT_BLACK_ON_WHITE, (char *) "Smart Oven Controller");
-	//displayString(210, 290, FONT_9PT_BLACK_ON_WHITE, (char *) CONTROLEO3_VERSION);
+	displayString(210, 290, FONT_9PT_BLACK_ON_WHITE, (char *) CONTROLEO3_VERSION);
 #ifdef NDEF
 	// tft.pokeRegister(ILI9488_DISPLAYON);
 	playTones(TUNE_STARTUP);
@@ -110,12 +110,13 @@ void setup() {
 	}
 
 	// Go to the first screen (this should never exit)
-	if (areOutputsConfigured())
-	showScreen(SCREEN_HOME);
-	else	
-	showScreen(SCREEN_SETTINGS);
+
 
 #endif
+	if (areOutputsConfigured())
+		showScreen(SCREEN_HOME);
+	else	
+		showScreen(SCREEN_SETTINGS);
 	Serial.println("Test");
 }
 
