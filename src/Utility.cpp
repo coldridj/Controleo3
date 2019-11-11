@@ -111,7 +111,7 @@ void animateIcons(uint16_t x)
 //   char buf[320 * 3];
 //   // Initialize the SD card
 //   if (!SD.begin()) {
-//     SerialUSB.println("Card failed, or not present");
+//     Serial.println("Card failed, or not present");
 //     return;
 //   }
   
@@ -119,10 +119,10 @@ void animateIcons(uint16_t x)
 //   sprintf(buf, "C3_%05d.bmp", prefs.screenshotNumber);
 //   File dataFile = SD.open(buf, FILE_WRITE);
 //   if (!dataFile) {
-//     SerialUSB.println("Can't open " + String(buf));
+//     Serial.println("Can't open " + String(buf));
 //     return;
 //   }
-//   SerialUSB.println("Writing screenshot to " + String(buf));
+//   Serial.println("Writing screenshot to " + String(buf));
   
 //   // Write the bitmap header
 //   memcpy_P(buf, bmpHeader, 54);
@@ -147,7 +147,7 @@ void animateIcons(uint16_t x)
 //   prefs.screenshotNumber = (prefs.screenshotNumber + 1) % 10000;
 //   savePrefs();
 //   playTones(TUNE_SCREENSHOT_DONE);
-//   SerialUSB.println("Screenshot written!");
+//   Serial.println("Screenshot written!");
 // }
 
 
@@ -174,7 +174,7 @@ void checkFreeMemory()
 
   // There has been a memory leak!
   sprintf(buffer100Bytes, "Free RAM was %ld and is now %ld", freeRAMOnBoot, getFreeRAM());
-  SerialUSB.println(buffer100Bytes);
+  Serial.println(buffer100Bytes);
 //  drawThickRectangle(80, 70, 320, 135, 10, RED);
 //  displayString(114, 100, FONT_12PT_BLACK_ON_WHITE, (char *) "Memory Leak!!!");
 //  sprintf(buffer100Bytes, "%d bytes lost", freeRAMOnBoot - getFreeRAM());

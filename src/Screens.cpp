@@ -809,8 +809,8 @@ redraw:
               prefs.learnedInertia = inertiaMap[bypassInertia];
               prefs.learnedInsulation = insulationMap[bypassInsulation];
               savePrefs();
-              SerialUSB.println("Saved user-selected learned values:");
-              SerialUSB.println("Power=" + String(prefs.learnedPower) + "  Inertia=" + String(prefs.learnedInertia) + "  Insulation=" + String(prefs.learnedInsulation));
+              Serial.println("Saved user-selected learned values:");
+              Serial.println("Power=" + String(prefs.learnedPower) + "  Inertia=" + String(prefs.learnedInertia) + "  Insulation=" + String(prefs.learnedInsulation));
             }
 
             // Break out of the while loop
@@ -1031,7 +1031,7 @@ uint8_t mapValue(uint16_t value, uint16_t map[])
     i++;
   if (map[i] == 0)
     i--;
-//  SerialUSB.println("Value " + String(value) + " was mapped to " + String(i) + " = " + String(map[i]));
+//  Serial.println("Value " + String(value) + " was mapped to " + String(i) + " = " + String(map[i]));
   return i;
 } 
 

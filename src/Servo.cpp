@@ -180,7 +180,7 @@ void setServoPosition(uint8_t servoDegrees, uint16_t timeToTake) {
 #if !TEENSY31
   TcCount16* TC = (TcCount16*) TC3;     // Get timer struct
   sprintf(buffer100Bytes, "Servo: move to %d degrees, over %d ms", servoDegrees, timeToTake);
-  SerialUSB.println(buffer100Bytes);
+  Serial.println(buffer100Bytes);
   // Make sure the degrees are 0 - 180
   if (servoDegrees > 180)
     return;

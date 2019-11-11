@@ -8,7 +8,7 @@ Sd2Card card;
 SdVolume volume;
 SdFile root;
 
-Controleo3LCDILI9341 tft;
+Controleo3LCDILI9341 tft = Controleo3LCDILI9341();
 #ifdef TOUCH_ENABLE
 Controleo3Touch  touch;
 #endif

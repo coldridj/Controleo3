@@ -483,36 +483,36 @@ uint8_t SdFile::open(SdFile* dirFile, const char* fileName, uint8_t oflag) {
  */
 uint8_t SdFile::open(SdFile* dirFile, uint16_t index, uint8_t oflag) {
   // error if already open
-SerialUSB.println("SdFile::open:1");
+Serial.println("SdFile::open:1");
 
   if (isOpen())return false;
-SerialUSB.println("SdFile::open:2");
+Serial.println("SdFile::open:2");
 
   // don't open existing file if O_CREAT and O_EXCL - user call error
   if ((oflag & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL)) return false;
-SerialUSB.println("SdFile::open:3");
+Serial.println("SdFile::open:3");
 
   vol_ = dirFile->vol_;
-SerialUSB.println("SdFile::open:4");
+Serial.println("SdFile::open:4");
 
   // seek to location of entry
   if (!dirFile->seekSet(32 * index)) return false;
-SerialUSB.println("SdFile::open:5");
+Serial.println("SdFile::open:5");
 
   // read entry into cache
   dir_t* p = dirFile->readDirCache();
-SerialUSB.println("SdFile::open:6");
+Serial.println("SdFile::open:6");
   if (p == NULL) return false;
-SerialUSB.println("SdFile::open:7");
+Serial.println("SdFile::open:7");
 
   // error if empty slot or '.' or '..'
   if (p->name[0] == DIR_NAME_FREE ||
       p->name[0] == DIR_NAME_DELETED || p->name[0] == '.') {
-SerialUSB.println("SdFile::open:8");
+Serial.println("SdFile::open:8");
     return false;
   }
   // open cached entry
-SerialUSB.println("SdFile::open:9");
+Serial.println("SdFile::open:9");
   return openCachedEntry(index & 0XF, oflag);
 }
 //------------------------------------------------------------------------------

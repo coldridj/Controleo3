@@ -344,17 +344,17 @@ boolean SDClass::begin() {
    */
 
     if (!card.init()) {
-        SerialUSB.print("SDClass::begin - Card failed to initialize");
+        Serial.print("SDClass::begin - Card failed to initialize");
         return false;
     }
     if (!volume.init(card)) {
-        SerialUSB.print("SDClass::begin - Volume failed to initialize");
+        Serial.print("SDClass::begin - Volume failed to initialize");
         return false;
     }
     if (root.isOpen())
         root.close();
     if (!root.openRoot(volume)) {
-        SerialUSB.print("SDClass::begin - Root failed to initialize");
+        Serial.print("SDClass::begin - Root failed to initialize");
         return false;
     }
   return true;

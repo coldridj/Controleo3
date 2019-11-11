@@ -81,7 +81,7 @@ void learn() {
   // Display the static strings
   displayString(10, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Learning has started.  First, figure out");
   displayString(10, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "the power required to maintain 120~C.");
-  SerialUSB.println("Learning started.  Figure out power needed to maintain 120C");
+  Serial.println("Learning started.  Figure out power needed to maintain 120C");
 
   // Ug, hate goto's!  But this saves a lot of extraneous code.
 userChangedMindAboutAborting:
@@ -184,8 +184,8 @@ userChangedMindAboutAborting:
       }
     
       // Abort learning
-      SerialUSB.println("Thermocouple error:" + String(buffer100Bytes));
-      SerialUSB.println("Learning aborted because of thermocouple error!");
+      Serial.println("Thermocouple error:" + String(buffer100Bytes));
+      Serial.println("Learning aborted because of thermocouple error!");
       // Show the error on the screen
       drawThickRectangle(0, 90, 480, 230, 15, RED);
       tft.fillRect(30, 105, 420, 115, WHITE);
@@ -207,7 +207,7 @@ userChangedMindAboutAborting:
       tft.fillRect(10, LINE(0), 465, 60, WHITE);
       displayString(10, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Learning Error!");
       displayString(10, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "Oven exceeded 200~C");
-      SerialUSB.println("Learning aborted because oven exceeded 200C!");
+      Serial.println("Learning aborted because oven exceeded 200C!");
       // Start cooling the oven
       learningPhase = LEARNING_PHASE_START_COOLING;
     }
@@ -227,7 +227,7 @@ userChangedMindAboutAborting:
           learningDutyCycle = 30;
         if (i < 15) {
           learningPhase = LEARNING_PHASE_CONSTANT_TEMP;
-          SerialUSB.println("Initial temperature ramp complete.  Maintaining 120C using all elements");
+          Serial.println("Initial temperature ramp complete.  Maintaining 120C using all elements");
           learningDutyCycle = 15;
           secondsIntoPhase = 0;
         }
@@ -237,7 +237,7 @@ userChangedMindAboutAborting:
           drawPerformanceBar(false, 0);
           displayString(10, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Learning failed!  Unable to heat");
           displayString(10, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "up oven quickly enough (all elements)");
-          SerialUSB.println("Learning aborted because oven could not ramp up to 120C!");
+          Serial.println("Learning aborted because oven could not ramp up to 120C!");
           learningPhase = LEARNING_PHASE_START_COOLING;
         }
         break;
@@ -275,7 +275,7 @@ userChangedMindAboutAborting:
 
             // Reset the bake integral, so it will be slow to increase the duty cycle again
             learningIntegral = 0;
-            SerialUSB.println("Over-temp. Elements off");
+            Serial.println("Over-temp. Elements off");
           }
         }
         else {
@@ -294,7 +294,7 @@ userChangedMindAboutAborting:
             // Increase duty cycles
             if (learningDutyCycle < 100)
               learningDutyCycle++;
-              SerialUSB.println("Under-temp. Increasing duty cycle");
+              Serial.println("Under-temp. Increasing duty cycle");
           }
         }
         
@@ -309,7 +309,7 @@ userChangedMindAboutAborting:
           // Time to measure the thermal intertia now
           displayString(10, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Measuring how quickly the oven gets");
           displayString(10, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "to 150~C using all elements at 80%");
-          SerialUSB.println("Measuring thermal inertia - how long it takes to get to 150C using all elements at 80%");
+          Serial.println("Measuring thermal inertia - how long it takes to get to 150C using all elements at 80%");
           learningPhase = LEARNING_PHASE_THERMAL_INERTIA;
           secondsLeftOfPhase = LEARNING_INERTIA_DURATION;
           prefs.learnedInertia = 0;
@@ -347,7 +347,7 @@ userChangedMindAboutAborting:
           tft.fillRect(10, LINE(0), 465, 60, WHITE);
           displayString(10, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Cooling oven back to 120~C and");
           displayString(10, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "measuring heat retention ...");
-          SerialUSB.println("Cooling back to 120C with all elements off.  Measuring heat retention");
+          Serial.println("Cooling back to 120C with all elements off.  Measuring heat retention");
 
           // Move to the next phase
           drawPerformanceBar(false, NO_PERFORMANCE_INDICATOR);
@@ -363,7 +363,7 @@ userChangedMindAboutAborting:
           drawPerformanceBar(false, 0);
           displayString(10, LINE(0), FONT_9PT_BLACK_ON_WHITE, (char *) "Learning failed!  Unable to ramp");
           displayString(10, LINE(1), FONT_9PT_BLACK_ON_WHITE, (char *) "up oven quickly enough to 150C");
-          SerialUSB.println("Learning aborted because oven could not ramp up to 150C!");
+          Serial.println("Learning aborted because oven could not ramp up to 150C!");
           learningPhase = LEARNING_PHASE_START_COOLING;
         }
         break;
@@ -392,7 +392,7 @@ userChangedMindAboutAborting:
           if (prefs.learnedInsulation == 0) {
             // The oven is still above 150C!!!
             learningPhase = LEARNING_PHASE_START_COOLING;
-            SerialUSB.println("Learning aborted because temperature wasn't going down!");
+            Serial.println("Learning aborted because temperature wasn't going down!");
           }
             
           // Extend the phase duration
@@ -464,7 +464,7 @@ userChangedMindAboutAborting:
         break;
 
       case LEARNING_PHASE_ABORT:
-        SerialUSB.println("Learning is over!");
+        Serial.println("Learning is over!");
         // Turn all elements and fans off
         setOvenOutputs(ELEMENTS_OFF, CONVECTION_FAN_OFF, COOLING_FAN_OFF);
         // Close the oven door now, over 3 seconds
@@ -521,7 +521,7 @@ void DisplayLearningTime(uint16_t duration, float temperature, int duty, int int
   // Write the time and temperature to the serial port, for graphing or analysis on a PC
   uint16_t fraction = ((uint16_t) (temperature * 100)) % 100;
   sprintf(buffer100Bytes, "%u, %d.%02d, %i, %i", duration, (uint16_t) temperature, fraction, duty, integral);
-  SerialUSB.println(buffer100Bytes);
+  Serial.println(buffer100Bytes);
 }
 
 

@@ -11,10 +11,10 @@
 #include "bits.h"
 #include <Adafruit_ILI9341.h>
 
-// #define LCD_WIDTH  		240
-// #define LCD_HEIGHT 		320
-// #define LCD_MAX_X		239
-// #define LCD_MAX_Y		319
+#define LCD_WIDTH  		240
+#define LCD_HEIGHT 		320
+#define LCD_MAX_X		239
+#define LCD_MAX_Y		319
 
 // Some common colors
 #define BLACK                   0x0000      //   0,   0,   0
@@ -53,11 +53,14 @@ class Controleo3LCDILI9341
 		void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c);
 		void fillScreen(uint16_t color);
 
-		void drawBitmap(int16_t x, int16_t y, uint16_t *pcolors, int16_t w, int16_t h);
+		void drawBitmapFull(int16_t x, int16_t y, uint16_t *pcolors, int16_t w, int16_t h);
 
 		void startBitmap(int16_t x, int16_t y, int16_t w, int16_t h);
   		void endBitmap();
   		void drawBitmap(uint16_t *data, uint32_t len);
+
+		uint8_t readcommand8(uint8_t reg, uint8_t index=0);
+		void setRotation(uint8_t r);
 };
 
 

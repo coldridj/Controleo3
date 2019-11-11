@@ -128,10 +128,10 @@ restart:
     // Sanity check on test point
     int16_t averageX = (topLeftX + topRightX + bottomRightX + bottomLeftX) >> 2;
     int16_t averageY = (topLeftY + topRightY + bottomRightY + bottomLeftY) >> 2;
-    SerialUSB.print(F("X delta = "));
-    SerialUSB.println(abs(averageX - centerX));
-    SerialUSB.print(F("Y delta = "));
-    SerialUSB.println(abs(averageY - centerY));
+    Serial.print(F("X delta = "));
+    Serial.println(abs(averageX - centerX));
+    Serial.print(F("Y delta = "));
+    Serial.println(abs(averageY - centerY));
     if (abs(averageX - centerX) > 60 || abs(averageY - centerY) > 60) {
       displayString(183, 240, FONT_9PT_BLACK_ON_WHITE, (char *) "Try again!");
       continue;
@@ -327,7 +327,7 @@ void setTouchTemperatureUnitChangeCallback(void (*f) (boolean displayInCelsius))
 void defineTouchArea(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
   if (touchNumTargets >= MAX_TAP_TARGETS) {
-    SerialUSB.println("Too many tap targets!!");
+    Serial.println("Too many tap targets!!");
     return;
   }
   

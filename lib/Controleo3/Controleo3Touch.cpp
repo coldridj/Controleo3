@@ -58,14 +58,14 @@ void Controleo3Touch::calibrate(int16_t tlX,int16_t trX,int16_t blX,int16_t brX,
     topRightY = trY;
     bottomRightY = brY;
 #ifdef TOUCH_DEBUG
-    SerialUSB.print("Touch data: tlX=" + String(tlX));
-    SerialUSB.print(" trX=" + String(trX));
-    SerialUSB.print(" blX=" + String(blX));
-    SerialUSB.print(" brX=" + String(brX));
-    SerialUSB.print(" tlY=" + String(tlY));
-    SerialUSB.print(" blY=" + String(blY));
-    SerialUSB.print(" trY=" + String(trY));
-    SerialUSB.println(" brY=" + String(brY));
+    Serial.print("Touch data: tlX=" + String(tlX));
+    Serial.print(" trX=" + String(trX));
+    Serial.print(" blX=" + String(blX));
+    Serial.print(" brX=" + String(brX));
+    Serial.print(" tlY=" + String(tlY));
+    Serial.print(" blY=" + String(blY));
+    Serial.print(" trY=" + String(trY));
+    Serial.println(" brY=" + String(brY));
 #endif
 }
 
@@ -120,10 +120,10 @@ bool Controleo3Touch::readRaw(int16_t *x, int16_t *y)
       return false;
 
 #ifdef TOUCH_DEBUG
-    SerialUSB.print("X = ");
-    SerialUSB.print(*x);
-    SerialUSB.print("   Y = ");
-    SerialUSB.println(*y);
+    Serial.print("X = ");
+    Serial.print(*x);
+    Serial.print("   Y = ");
+    Serial.println(*y);
 #endif
     return true;
 }

@@ -23,7 +23,7 @@ void getPrefs()
   // Sanity check on the size of the prefences
   if (sizeof(prefs) > 4096)
   {
-    SerialUSB.println("Prefs size must not exceed 4Kb!!!!!!!!");
+    Serial.println("Prefs size must not exceed 4Kb!!!!!!!!");
     // Hopefully getting a massive delay while developing new code alert you to this situation 
     delay(10000);
   }
@@ -72,7 +72,7 @@ void getPrefs()
     prefs.lastUsedProfileBlock = FIRST_PROFILE_BLOCK;
   }
 
-  SerialUSB.println("Read prefs from block " + String(prefsToUse) + ". Seq No=" + String(prefs.sequenceNumber) + " size=" + String((unsigned long)sizeof(prefs)));
+  Serial.println("Read prefs from block " + String(prefsToUse) + ". Seq No=" + String(prefs.sequenceNumber) + " size=" + String((unsigned long)sizeof(prefs)));
 
   // Remember which block was last used to save prefs
   lastPrefsBlock = prefsToUse;
@@ -120,7 +120,7 @@ void writePrefsToFlash()
 
   // Sanity check on prefs size (maximum is 4K)
   if (prefsSize > 4096) {
-    SerialUSB.println("Prefs exceed the 4K maximum!!!");
+    Serial.println("Prefs exceed the 4K maximum!!!");
     return;
   }
 
@@ -138,7 +138,7 @@ void writePrefsToFlash()
   // Protect flash again, now that writing is done
   flash.allowWritingToPrefs(false);
 
-  SerialUSB.println("Finished writing prefs to block " + String(lastPrefsBlock) + ". Seq No = " + String(prefs.sequenceNumber));
+  Serial.println("Finished writing prefs to block " + String(lastPrefsBlock) + ". Seq No = " + String(prefs.sequenceNumber));
   timeOfLastSavePrefsRequest = 0;
 }
 

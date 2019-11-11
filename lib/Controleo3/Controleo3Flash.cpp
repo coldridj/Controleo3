@@ -159,7 +159,7 @@ bool Controleo3Flash::verifyFlashIC()
 	FLASH_CS_IDLE;
 
     if (msg) {
-        SerialUSB.println(msg);
+        Serial.println(msg);
         return false;
     }
     return true;
@@ -180,7 +180,7 @@ void Controleo3Flash::waitUntilNotBusy(uint16_t timeMillis)
             return;
         delayMicroseconds(100);
     }
-    SerialUSB.println("Err:waitUntilNotBusy:Timeout");
+    Serial.println("Err:waitUntilNotBusy:Timeout");
 }
 
 
@@ -294,7 +294,7 @@ void Controleo3Flash::eraseProfileBlock(uint16_t block)
 {
     // Sanity check
     if ((block & 0x0F) || block < 64 || block > 511) {
-        SerialUSB.println("Profile block number out of range");
+        Serial.println("Profile block number out of range");
         return;
     }
 
@@ -539,44 +539,44 @@ uint16_t Controleo3Flash::getBitmapPage(uint16_t bitmapNumber, uint16_t bitmapWi
     pageOffset = ((bitmapNumber - 1) % FLASH_ADDRESSES_PER_PAGE) * (FLASH_ADDRESS_SIZE >> 1);
     startRead(tablePage, FLASH_C3_PAGE_SIZE, (uint8_t *) addressTable);
     endRead();
-/*    SerialUSB.print("Previous bitmap: tablePage = ");
-    SerialUSB.print(tablePage);
-    SerialUSB.print("  pageOffset = ");
-    SerialUSB.print(pageOffset);
-    SerialUSB.print("  width = ");
-    SerialUSB.print(addressTable[pageOffset + 1]);
-    SerialUSB.print("  height = ");
-    SerialUSB.println(addressTable[pageOffset + 2]);*/
+/*    Serial.print("Previous bitmap: tablePage = ");
+    Serial.print(tablePage);
+    Serial.print("  pageOffset = ");
+    Serial.print(pageOffset);
+    Serial.print("  width = ");
+    Serial.print(addressTable[pageOffset + 1]);
+    Serial.print("  height = ");
+    Serial.println(addressTable[pageOffset + 2]);*/
 
     // How many pages were used to store the previous bitmap?  Multiply the width and height * 2 (16-bit)
     uint32_t bitmapBytes = addressTable[pageOffset + 1] * addressTable[pageOffset + 2] * 2;
 
 //    if (bitmapBytes < 16)
-//      SerialUSB.print("-----------------------------");
-//    SerialUSB.print("Bitmap Bytes = ");
-//    SerialUSB.println(bitmapBytes);
+//      Serial.print("-----------------------------");
+//    Serial.print("Bitmap Bytes = ");
+//    Serial.println(bitmapBytes);
     uint16_t pagesForBitmap = (bitmapBytes + (FLASH_C3_PAGE_SIZE - 1)) >> 8;
-//    SerialUSB.print("pagesForBitmap = ");
-//    SerialUSB.println(pagesForBitmap);
+//    Serial.print("pagesForBitmap = ");
+//    Serial.println(pagesForBitmap);
 
     // Figure out the first page that this bitmap can be stored
     uint16_t pageForThisBitmap = addressTable[pageOffset] + pagesForBitmap;
-//    SerialUSB.print("pageForThisBitmap = ");
-//    SerialUSB.println(pageForThisBitmap);
+//    Serial.print("pageForThisBitmap = ");
+//    Serial.println(pageForThisBitmap);
 
     // Read in the address table for the current bitmap
     tablePage = FLASH_BITMAP_ADDRESS_TABLE + (bitmapNumber / FLASH_ADDRESSES_PER_PAGE);
     pageOffset = (bitmapNumber % FLASH_ADDRESSES_PER_PAGE) * (FLASH_ADDRESS_SIZE >> 1);
     startRead(tablePage, FLASH_C3_PAGE_SIZE, (uint8_t *) addressTable);
     endRead();
-/*    SerialUSB.print("This bitmap: tablePage = ");
-    SerialUSB.print(tablePage);
-    SerialUSB.print("  pageOffset = ");
-    SerialUSB.println(pageOffset);
-    SerialUSB.print("  width = ");
-    SerialUSB.print(bitmapWidth);
-    SerialUSB.print("  height = ");
-    SerialUSB.println(bitmapHeight);*/
+/*    Serial.print("This bitmap: tablePage = ");
+    Serial.print(tablePage);
+    Serial.print("  pageOffset = ");
+    Serial.println(pageOffset);
+    Serial.print("  width = ");
+    Serial.print(bitmapWidth);
+    Serial.print("  height = ");
+    Serial.println(bitmapHeight);*/
 
     // Update the entry for this bitmap
     addressTable[pageOffset] = pageForThisBitmap;
@@ -699,10 +699,10 @@ void Controleo3Flash::dumpStatusRegisters()
     write8(CMD_READ_STATUS1_REGISTER);
     uint8_t s2 = read8();
     FLASH_CS_IDLE;
-    SerialUSB.print("Status Register 1 = 0x"); SerialUSB.print(s2, HEX);
+    Serial.print("Status Register 1 = 0x"); Serial.print(s2, HEX);
     FLASH_CS_ACTIVE;
     write8(CMD_READ_STATUS2_REGISTER);
      s2 = read8();
     FLASH_CS_IDLE;
-    SerialUSB.print("  Status Register 2 = 0x"); SerialUSB.println(s2, HEX);
+    Serial.print("  Status Register 2 = 0x"); Serial.println(s2, HEX);
 }

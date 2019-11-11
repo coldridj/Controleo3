@@ -9,7 +9,7 @@
 #include <Arduino.h>
 #include "Sd2Card.h"
 
-#define DEBUG_PRINT(x)          SerialUSB.println(F(x))
+#define DEBUG_PRINT(x)          Serial.println(F(x))
 
 
 // At full speed, a data bit is clocked out every 800ns.  So 1.25MHz, well below the data rate
@@ -93,14 +93,14 @@ uint32_t Sd2Card::cardSize(void)
 
     // Calculate the size based on the version
     if (csd.v1.csd_ver == 0) {
-        SerialUSB.println("Card is version 0");
+        Serial.println("Card is version 0");
         uint8_t read_bl_len = csd.v1.read_bl_len;
         uint16_t c_size = (csd.v1.c_size_high << 10) | (csd.v1.c_size_mid << 2) | csd.v1.c_size_low;
         uint8_t c_size_mult = (csd.v1.c_size_mult_high << 1) | csd.v1.c_size_mult_low;
         blocks = (uint32_t)(c_size + 1) << (c_size_mult + read_bl_len - 7);
     }
     else if (csd.v1.csd_ver == 1) {
-        SerialUSB.println("Card is version 1");
+        Serial.println("Card is version 1");
         uint32_t c_size = ((uint32_t)csd.v2.c_size_high << 16) | (csd.v2.c_size_mid << 8) | csd.v2.c_size_low;
         blocks = (c_size + 1) << 10;
     } else {
@@ -341,8 +341,8 @@ done:
 // Writes a 512 byte block to an SD card.
 uint8_t Sd2Card::writeBlock(uint32_t blockNumber, const uint8_t* src)
 {
-//    SerialUSB.print("Sd2Card::writeBlock - writing block ");
-//    SerialUSB.println(blockNumber);
+//    Serial.print("Sd2Card::writeBlock - writing block ");
+//    Serial.println(blockNumber);
     boolean retVal = false;
     // Don't allow write to first block
     if (blockNumber == 0) {
@@ -397,7 +397,7 @@ uint8_t Sd2Card::writeData(const uint8_t* src)
 // Send one block of data for write block or write multiple blocks
 uint8_t Sd2Card::writeData(uint8_t token, const uint8_t* src)
 {
-//    SerialUSB.println("Sd2Card::writeData - writing 512 bytes");
+//    Serial.println("Sd2Card::writeData - writing 512 bytes");
     spiSend(token);
     for (uint16_t i = 0; i < 512; i++)
         spiSend(src[i]);
@@ -417,10 +417,10 @@ uint8_t Sd2Card::writeData(uint8_t token, const uint8_t* src)
 //  Start a write multiple blocks sequence
 uint8_t Sd2Card::writeStart(uint32_t blockNumber, uint32_t eraseCount)
 {
-    SerialUSB.print("Sd2Card::writeStart - writing block ");
-    SerialUSB.print(blockNumber);
-    SerialUSB.print(" eraseCount=");
-    SerialUSB.println(eraseCount);
+    Serial.print("Sd2Card::writeStart - writing block ");
+    Serial.print(blockNumber);
+    Serial.print(" eraseCount=");
+    Serial.println(eraseCount);
     boolean retVal = false;
     // Don't allow write to first block
     if (blockNumber == 0) {
@@ -451,7 +451,7 @@ done:
 // End a write multiple blocks sequence
 uint8_t Sd2Card::writeStop(void)
 {
-    SerialUSB.print("Sd2Card::writeStop - writing block ");
+    Serial.print("Sd2Card::writeStop - writing block ");
     boolean retVal = false;
     if (!waitNotBusy(SD_WRITE_TIMEOUT))
         goto done;

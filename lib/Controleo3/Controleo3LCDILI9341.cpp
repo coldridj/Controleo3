@@ -16,11 +16,6 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ILI9341.h>
 
-#define LCD_WIDTH  		240
-#define LCD_HEIGHT 		320
-#define LCD_MAX_X		239
-#define LCD_MAX_Y		319
-
 // For the Adafruit shield, these are the default.
 #define tft9341_DC 9
 #define tft9341_CS 10
@@ -32,21 +27,19 @@
 // Use hardware SPI (on Uno, #13, #12, #11) and the above for CS/DC
 // Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(tft9341_CS, tft9341_DC);
 // If using the breakout, change pins as desired
-Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(tft9341_CS, tft9341_DC, tft9341_MOSI, tft9341_CLK, tft9341_RST, tft9341_MISO);
+Adafruit_ILI9341 tft9341 = Adafruit_ILI9341(tft9341_CS, tft9341_DC, tft9341_MOSI, tft9341_CLK, tft9341_RST, tft9341_MISO);;
 
 // Constructor for the tft9341 display
 Controleo3LCDILI9341::Controleo3LCDILI9341(void)
 {
-
 }
-
 
 void Controleo3LCDILI9341::begin()
 {
   	tft9341.begin();
 
-	// Wait for things to settle before returning
-    delay(15);
+	// // Wait for things to settle before returning
+    // delay(15);
 }
 
 // Draw a horizontal line
@@ -91,7 +84,7 @@ void Controleo3LCDILI9341::drawPixel(int16_t x, int16_t y, uint16_t color) {
 // Draw part or all of a bitmap.  The bitmaps must be 16-bit color.
 // This function can be called over and over again until the whole
 // bitmap has been rendered to the screen.
-void Controleo3LCDILI9341::drawBitmap(int16_t x, int16_t y, uint16_t *pcolors, int16_t w, int16_t h)
+void Controleo3LCDILI9341::drawBitmapFull(int16_t x, int16_t y, uint16_t *pcolors, int16_t w, int16_t h)
 {
 	tft9341.drawRGBBitmap(x, y, pcolors, w, h);
 }
@@ -120,4 +113,13 @@ void Controleo3LCDILI9341::drawBitmap(uint16_t *data, uint32_t len)
 void Controleo3LCDILI9341::endBitmap()
 {
     // do nothing
+}
+
+uint8_t Controleo3LCDILI9341::readcommand8(uint8_t reg, uint8_t index=0)
+{
+	return tft9341.readcommand8(reg, index);
+}
+
+void Controleo3LCDILI9341::setRotation(uint8_t r) {
+	tft9341.setRotation(r);
 }

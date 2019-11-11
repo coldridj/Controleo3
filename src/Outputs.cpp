@@ -55,7 +55,7 @@ void initOutputs() {
 void setOutput(uint8_t outputNumber, boolean state) {
   // Make sure it is a valid output
   if (outputNumber > NUMBER_OF_OUTPUTS) {
-    SerialUSB.println("setOutput: outputNumber is not in range!");
+    Serial.println("setOutput: outputNumber is not in range!");
     return;
   }
 
@@ -113,7 +113,7 @@ boolean getOutput(uint8_t outputNumber)
 {
   // Make sure it is a valid output
   if (outputNumber > NUMBER_OF_OUTPUTS) {
-    SerialUSB.println("getOutput: outputNumber is not in range!");
+    Serial.println("getOutput: outputNumber is not in range!");
     return false;
   }
   return outputState[outputNumber];
