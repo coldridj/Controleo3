@@ -63,7 +63,7 @@ class Controleo3Flash {
 		uint16_t getBitmapInfo(uint16_t bitmapNumber, uint16_t *bitmapWidth, uint16_t *bitmapHeight);
 
 private:
-#if TEENSY31
+#if TEENSY31 | TEENSY36
 		volatile uint8_t *portAOut, *portAIn, *portAMode;
 #else
 		volatile uint32_t *portAOut, *portAIn, *portAMode;

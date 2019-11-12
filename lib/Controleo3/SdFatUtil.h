@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /* Arduino SdFat Library
  * Copyright (C) 2008 by William Greiman
  *
@@ -73,3 +75,5 @@ static NOINLINE void SerialPrintln_P(PGM_P str) {
 }
 #endif  // __AVR__
 #endif  // #define SdFatUtil_h
+
+#endif

@@ -8,7 +8,7 @@
 #include "Outputs.h"
 #include "Temperature.h"
 
-#if TEENSY31
+#if TEENSY31 | TEENSY36 | ESP32
 //#include <gclk.h>
 #endif
 
@@ -65,7 +65,7 @@ volatile int16_t servoIncrement;           // The amount to increase/decrease th
 
 // Starts the timer.  Called on startup
 void initializeTimer() {
-#if !TEENSY31
+#if !(TEENSY31 | TEENSY36 | ESP32)
   // Enable clock for TC 
   REG_GCLK_CLKCTRL = (uint16_t) (GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_ID_TCC2_TC3);
   while ( GCLK->STATUS.bit.SYNCBUSY == 1 ); // Wait for sync 
@@ -118,7 +118,7 @@ void initializeTimer() {
 // Interrupt handler for TC3
 void TC3_Handler()
 {
-#if !TEENSY31
+#if !(TEENSY31 | TEENSY36 | ESP32)
   volatile static int thermocoupleTimer = 0;
 
   TcCount16* TC = (TcCount16*) TC3; 
@@ -177,7 +177,7 @@ void TC3_Handler()
 
 // Move the servo to servoDegrees, in timeToTake milliseconds (1/1000 second)
 void setServoPosition(uint8_t servoDegrees, uint16_t timeToTake) {
-#if !TEENSY31
+#if !(TEENSY31 | TEENSY36 | ESP32)
   TcCount16* TC = (TcCount16*) TC3;     // Get timer struct
   sprintf(buffer100Bytes, "Servo: move to %d degrees, over %d ms", servoDegrees, timeToTake);
   Serial.println(buffer100Bytes);

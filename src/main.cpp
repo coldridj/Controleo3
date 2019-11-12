@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include "ReflowWizard.h"
+#include "Bitmaps.h"
 #include "Outputs.h"
 // #include "Prefs.h"
 #include "Render.h"
@@ -17,7 +18,7 @@
 // #define OUTPUT_ENABLE // process outputs
 
 void setup() {
-	//Serial.begin(115200);
+	Serial.begin(115200);
 	delay(1000);
 #ifdef OUTPUT_ENABLE
 	// First priority - turn off the relays!
@@ -48,7 +49,16 @@ void setup() {
 	}
 #endif
 
+//	Serial.println(xPortGetCoreID());
 
+// xTaskCreatePinnedToCore(
+// 			Task1code, /* Function to implement the task */
+// 			"Task1", /* Name of the task */
+// 			10000,	/* Stack size in words */
+// 			NULL,	/* Task input parameter */
+// 			0,	/* Priority of the task */
+// 			&Task1,	/* Task handle. */
+// 			0); 
 
 	// Get the splash screen up as quickly as possible
 	tft.begin();
@@ -113,10 +123,10 @@ void setup() {
 
 
 #endif
-	if (areOutputsConfigured())
-		showScreen(SCREEN_HOME);
-	else	
-		showScreen(SCREEN_SETTINGS);
+	// if (areOutputsConfigured())
+	// 	showScreen(SCREEN_HOME);
+	// else	
+	showScreen(SCREEN_SETTINGS);
 	Serial.println("Test");
 }
 
@@ -126,6 +136,3 @@ void loop()
 	// This should never be called (showScreen never exits)
 	//showScreen(SCREEN_HOME);
 }
-
-
-

@@ -1,4 +1,4 @@
-#if TEENSY31
+#if TEENSY31 | TEENSY36 | ESP32
 
 #include "Teensy.h"
 

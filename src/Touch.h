@@ -5,6 +5,15 @@
 
 #include <Arduino.h>
 
+#ifdef TOUCH_ENABLE
+extern Controleo3Touch  touch;
+#endif
+
+// Should the temperature be displayed while waiting for a tap?
+#define DONT_SHOW_TEMPERATURE          0
+#define SHOW_TEMPERATURE_IN_HEADER     1
+#define CHECK_FOR_TAP_THEN_EXIT        2
+
 void CalibrateTouchscreen();
 void drawCrosshairs(uint16_t x, uint16_t y, boolean draw);
 void debounce();

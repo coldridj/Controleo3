@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /*
 
  SD - a slightly more friendly wrapper for sdfatlib
@@ -122,5 +124,7 @@ using namespace SDLib;
 typedef SDLib::File    SDFile;
 typedef SDLib::SDClass SDFileSystemClass;
 #define SDFileSystem   SDLib::SD
+
+#endif
 
 #endif

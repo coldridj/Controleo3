@@ -53,7 +53,7 @@ class Controleo3Touch
         bool isPressed();
 
     private:
-#if TEENSY31
+#if TEENSY31 | TEENSY36 | ESP32
   		volatile uint8_t *portAOut, *portAIn, *portAMode, *portBOut, *portBIn, *portBMode;
 #else
   		volatile uint32_t *portAOut, *portAIn, *portAMode, *portBOut, *portBIn, *portBMode;

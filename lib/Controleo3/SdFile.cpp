@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /* Arduino SdFat Library
  * Copyright (C) 2009 by William Greiman
  *
@@ -1272,4 +1274,6 @@ void SdFile::writeln_P(PGM_P str) {
   write_P(str);
   println();
 }
+#endif
+
 #endif

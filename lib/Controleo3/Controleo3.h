@@ -20,7 +20,6 @@
 #include "Controleo3Flash.h"
 #include "Controleo3SD.h"
 
-#define BUZZER_PIN              MISO
-#define SD_DETECT_PIN           A0
+#define SD_DETECT_PIN   
 
 #endif // CONTROLEO3_H_

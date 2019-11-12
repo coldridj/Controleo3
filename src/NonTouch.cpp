@@ -3,10 +3,12 @@
 #include "Render.h"
 #include "Temperature.h"
 #include "NonTouch.h"
+#include "Bitmaps.h"
 
 // Display the temperature on the screen once per second
 void displayTemperatureInHeader()
 {
+#ifdef THERMO_ENABLE
   float temperature = getCurrentTemperature();
   char *str = getTemperatureString(buffer100Bytes, temperature, true);
 
@@ -18,4 +20,5 @@ void displayTemperatureInHeader()
   else {
     displayFixedWidthString(351, 11, str, 9, FONT_9PT_BLACK_ON_WHITE_FIXED);
   }
+#endif
 }

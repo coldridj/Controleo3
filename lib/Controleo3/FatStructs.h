@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /* Arduino SdFat Library
  * Copyright (C) 2009 by William Greiman
  *
@@ -416,3 +418,4 @@ static inline uint8_t DIR_IS_FILE_OR_SUBDIR(const dir_t* dir) {
   return (dir->attributes & DIR_ATT_VOLUME_ID) == 0;
 }
 #endif  // FatStructs_h
+#endif

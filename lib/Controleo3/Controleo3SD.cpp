@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /*
 
  SD - a slightly more friendly wrapper for sdfatlib
@@ -631,3 +633,5 @@ void File::rewindDirectory(void) {
 SDClass SD;
 
 };
+
+#endif

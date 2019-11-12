@@ -7,6 +7,8 @@
 #include "Help.h"
 #include "Touch.h"
 #include "Render.h"
+#include "Screens.h"
+#include "Bitmaps.h"
 
 // Shows context-sensitive help for the various screens
 

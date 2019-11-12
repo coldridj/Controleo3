@@ -9,12 +9,16 @@
 
 #include "Arduino.h"
 #include "bits.h"
-#include <Adafruit_ILI9341.h>
+#if TEENSY31 | TEENSY36
+#include "ILI9341_t3.h"
+#else
+#include "Adafruit_ILI9341.h"
+#endif
 
 #define LCD_WIDTH  		240
 #define LCD_HEIGHT 		320
-#define LCD_MAX_X		239
-#define LCD_MAX_Y		319
+#define LCD_MAX_X		LCD_WIDTH - 1
+#define LCD_MAX_Y		LCD_HEIGHT - 1
 
 // Some common colors
 #define BLACK                   0x0000      //   0,   0,   0
@@ -37,7 +41,11 @@
 #define GREEN_YELLOW            0xAFE5      // 173, 255,  47
 #define PINK                    0xF81F      // 255, 192, 203
 
+#if TEENSY31 | TEENSY36
+extern ILI9341_t3 tft9341;
+#else 
 extern Adafruit_ILI9341 tft9341;
+#endif
 
 class Controleo3LCDILI9341
 {
@@ -53,7 +61,7 @@ class Controleo3LCDILI9341
 		void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t c);
 		void fillScreen(uint16_t color);
 
-		void drawBitmapFull(int16_t x, int16_t y, uint16_t *pcolors, int16_t w, int16_t h);
+		void drawBitmapFull(int16_t x, int16_t y, const uint16_t *pcolors, int16_t w, int16_t h);
 
 		void startBitmap(int16_t x, int16_t y, int16_t w, int16_t h);
   		void endBitmap();

@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 // Written by Peter Easton
 // Released under CC BY-NC-SA 3.0 license
 // Build a reflow oven: http://whizoo.com
@@ -464,3 +466,5 @@ done:
     CS_IDLE;
     return retVal;
 }
+
+#endif

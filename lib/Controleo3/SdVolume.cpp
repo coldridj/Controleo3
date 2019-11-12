@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /* Arduino SdFat Library
  * Copyright (C) 2009 by William Greiman
  *
@@ -294,3 +296,5 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
   }
   return true;
 }
+
+#endif

@@ -1,3 +1,5 @@
+#ifdef THERMO_ENABLE
+
 // Written by Peter Easton
 // Released under CC BY-NC-SA 3.0 license
 // Build a reflow oven: http://whizoo.com
@@ -96,3 +98,4 @@ private:
 };
 
 #endif  // CONTROLEO3MAX31856_H
+#endif

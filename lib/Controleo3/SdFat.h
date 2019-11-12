@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /* Arduino SdFat Library
  * Copyright (C) 2009 by William Greiman
  *
@@ -549,3 +551,5 @@ class SdVolume {
   }
 };
 #endif  // SdFat_h
+
+#endif

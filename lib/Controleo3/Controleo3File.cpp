@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 /*
 
  SD - a slightly more friendly wrapper for sdfatlib
@@ -148,3 +150,4 @@ File::operator bool() {
   return false;
 }
 
+#endif

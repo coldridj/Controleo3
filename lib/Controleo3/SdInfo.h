@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 // Written by Peter Easton
 // Released under CC BY-NC-SA 3.0 license
 // Build a reflow oven: http://whizoo.com
@@ -201,3 +203,5 @@ union csd_t {
   csd2_t v2;
 };
 #endif  // SDINFO_H_
+
+#endif

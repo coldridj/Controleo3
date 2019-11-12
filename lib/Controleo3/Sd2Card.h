@@ -1,3 +1,5 @@
+#ifdef SD_ENABLE
+
 // Written by Peter Easton
 // Released under CC BY-NC-SA 3.0 license
 // Build a reflow oven: http://whizoo.com
@@ -65,7 +67,7 @@ class Sd2Card {
 		uint8_t writeStop(void);
 
 	private:
-#if TEENSY31
+#if TEENSY31 | TEENSY36
 		volatile uint8_t *portAOut, *portAIn, *portAMode;
 #else
 		volatile uint32_t *portAOut, *portAIn, *portAMode;
@@ -81,3 +83,5 @@ class Sd2Card {
 		void    spiSend(uint8_t data);
 };
 #endif  // SD2CARD_H_
+
+#endif
